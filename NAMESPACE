@@ -2,5 +2,5 @@
 
 import(madrat)
 import(magclass)
-importFrom(testthat,is_testing)
+importFrom(raster,raster)
 importFrom(utils,download.file)

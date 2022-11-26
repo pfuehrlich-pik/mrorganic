@@ -9,5 +9,6 @@
 
 convertGSOCseq <- function(x) {
   stop("work in progress")
+  #ra <- projectRaster(r, res=0.25, crs="+proj=longlat +datum=WGS84 +no_defs") ?
   return(NULL)
 }

@@ -1,7 +1,6 @@
-#' @importFrom testthat is_testing
 #' @importFrom utils download.file
 
-downloadGSOCseq <- function(subtype = "paper") {
+downloadGSOCseq <- function(subtype = "ini") {
   # Define subtype-specific elements of the meta data. Elements that are common to all subtypes are added further down.
   settings <- list(ini = list(title = "Initial SOC Stocks (t0)",
                               description = "Initial Soil organic carbon stocks t0",
@@ -11,12 +10,7 @@ downloadGSOCseq <- function(subtype = "paper") {
                               url = "http://54.229.242.119/GSOCseqv1.1/GSOCseq_finalSOC_SSM1_Map030.tif"))
   meta <- toolSubtypeSelect(subtype, settings)
 
-  tryCatch({
-    download.file(meta$url,
-                  quiet = requireNamespace("testthat", quietly = TRUE) && testthat::is_testing())
-    meta$url <- meta$url[1]
-  },
-  error = stop("GSOCseq data not found on the server!") )
+  download.file(meta$url, destfile = basename(meta$url))
 
   # Compose meta data by adding elements that are the same for all subtypes.
   return(list(url           = meta$url,

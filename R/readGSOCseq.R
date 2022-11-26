@@ -11,8 +11,11 @@
 #' a <- readSource("GSOCseq")
 #' }
 #' @seealso \code{\link{readSource}}
+#' @importFrom raster raster
 
 readGSOCseq <- function(subtype="paper") {
-  stop("work in progress")
-  return(NULL)
+  r <- raster(Sys.glob("*.tif"))
+  x <- as.magpie(0)
+  attr(x, "object") <- r
+  return(x)
 }

@@ -10,8 +10,7 @@ Depends:
     magclass(>= 3.17),
     madrat(>= 2.8.0),
 Imports:
-    raster,
-    testthat
+    raster
 License: LGPL-3 | file LICENSE
 LazyData: no
 Encoding: UTF-8
