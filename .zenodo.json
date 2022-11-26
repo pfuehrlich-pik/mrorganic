@@ -1,0 +1,10 @@
+{
+  "title": "mrorganic: madrat based MAgPIE Input Data Library",
+  "version": "0.0.2",
+  "description": "<p>Provides functions for MAgPIE country and cellular input data generation.<\/p>",
+  "creators": [
+    {
+      "name": "Dietrich, Jan Philipp"
+    }
+  ]
+}
