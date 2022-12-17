@@ -2,7 +2,6 @@
 #'
 #' Read GSOCseq data
 #'
-#' @param subtype Type
 #' @return data
 #'
 #' @author Jan Philipp Dietrich
@@ -11,10 +10,10 @@
 #' a <- readSource("GSOCseq")
 #' }
 #' @seealso \code{\link{readSource}}
-#' @importFrom raster raster
+#' @importFrom terra rast
 
-readGSOCseq <- function(subtype="paper") {
-  r <- raster(Sys.glob("*.tif"))
+readGSOCseq <- function() {
+  r <- terra::rast(Sys.glob("*.tif"))
   x <- as.magpie(0)
   attr(x, "object") <- r
   return(x)

@@ -1,8 +1,8 @@
 Package: mrorganic
 Type: Package
 Title: madrat based MAgPIE Input Data Library
-Version: 0.0.2
-Date: 2022-11-26
+Version: 0.0.3
+Date: 2022-12-17
 Authors@R: person("Jan Philipp", "Dietrich", email = "dietrich@pik-potsdam.de", role = c("aut","cre"))
 Description: Provides functions for MAgPIE country and cellular input data generation.
 Depends:
@@ -10,11 +10,11 @@ Depends:
     magclass(>= 3.17),
     madrat(>= 2.8.0),
 Imports:
-    raster
+    terra
 License: LGPL-3 | file LICENSE
 LazyData: no
 Encoding: UTF-8
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.2
 Suggests:
     knitr,
     rmarkdown,

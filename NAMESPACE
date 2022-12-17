@@ -2,5 +2,5 @@
 
 import(madrat)
 import(magclass)
-importFrom(raster,raster)
+importFrom(terra,rast)
 importFrom(utils,download.file)

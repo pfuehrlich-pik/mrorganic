@@ -4,10 +4,7 @@
 \alias{readGSOCseq}
 \title{Read GSOCseq}
 \usage{
-readGSOCseq(subtype = "paper")
-}
-\arguments{
-\item{subtype}{Type}
+readGSOCseq()
 }
 \value{
 data
