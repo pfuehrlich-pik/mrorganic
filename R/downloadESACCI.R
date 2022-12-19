@@ -16,6 +16,8 @@ downloadESACCI <- function(subtype = "landcover2010") {
 
   download.file(meta$url, destfile = basename(meta$url))
 
+  download.file("http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Legend.csv", destfile = "legend.csv")
+
   # Compose meta data by adding elements that are the same for all subtypes.
   return(list(url           = meta$url,
               doi           = NULL,
