@@ -4,7 +4,10 @@
 \alias{readGSOCseq}
 \title{Read GSOCseq}
 \usage{
-readGSOCseq()
+readGSOCseq(subtype = "ini")
+}
+\arguments{
+\item{subtype}{data set to use (currently available "ini" and "finalSSM1")}
 }
 \value{
 data

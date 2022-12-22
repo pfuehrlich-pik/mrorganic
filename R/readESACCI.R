@@ -15,7 +15,5 @@
 
 readESACCI <- function(subtype = "landcover2010") {
   r <- terra::rast(Sys.glob("*.tif"))
-  x <- as.magpie(0)
-  attr(x, "object") <- r
-  return(x)
+  return(list(x = r, class = "SpatRaster"))
 }

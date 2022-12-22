@@ -2,6 +2,7 @@
 #'
 #' Read GSOCseq data
 #'
+#' @param subtype data set to use (currently available "ini" and "finalSSM1")
 #' @return data
 #'
 #' @author Jan Philipp Dietrich
@@ -12,9 +13,7 @@
 #' @seealso \code{\link{readSource}}
 #' @importFrom terra rast
 
-readGSOCseq <- function() {
+readGSOCseq <- function(subtype = "ini") {
   r <- terra::rast(Sys.glob("*.tif"))
-  x <- as.magpie(0)
-  attr(x, "object") <- r
-  return(x)
+  return(list(x = r, class = "SpatRaster"))
 }
