@@ -13,7 +13,6 @@ downloadESACCI <- function(subtype = "landcover2010") {
                                           "Available at: ",
                                           "maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf")))
   meta <- toolSubtypeSelect(subtype, settings)
-  # remowithr::local_options(timeout = max(1800, getOption("timeout")))
   download.file(meta$url, destfile = basename(meta$url))
 
   download.file("http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Legend.csv", destfile = "legend.csv")
