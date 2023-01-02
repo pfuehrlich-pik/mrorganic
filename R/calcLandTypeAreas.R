@@ -13,6 +13,7 @@
 #' @seealso \code{\link{calcOutput}}
 
 calcLandTypeAreas <- function() {
+  terra::terraOptions(tempdir = getConfig("tmpfolder"))
   land <- readSource("ESACCI", subtype = "landcover2010", convert = FALSE)
   m <- rbind(c(10, 1), c(20, 1), c(30, 1), c(130, 2))
   message("Please be patient, this will take now a while.")

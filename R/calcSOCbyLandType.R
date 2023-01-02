@@ -13,6 +13,8 @@
 
 calcSOCbyLandType <- function() {
 
+  terra::terraOptions(tempdir = getConfig("tmpfolder"))
+
   message("Please be patient, this will take now a while.")
 
   # read in SOC data

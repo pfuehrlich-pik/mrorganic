@@ -38,7 +38,7 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrorganic** in publications use:
 
-Dietrich J (2022). _mrorganic: madrat based MAgPIE Input Data Library_. R package version 0.0.4.
+Dietrich J (2023). _mrorganic: madrat based MAgPIE Input Data Library_. R package version 0.0.4.
 
 A BibTeX entry for LaTeX users is
 
@@ -46,7 +46,7 @@ A BibTeX entry for LaTeX users is
 @Manual{,
   title = {mrorganic: madrat based MAgPIE Input Data Library},
   author = {Jan Philipp Dietrich},
-  year = {2022},
+  year = {2023},
   note = {R package version 0.0.4},
 }
 ```
