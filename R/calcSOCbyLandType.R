@@ -38,5 +38,6 @@ calcSOCbyLandType <- function() {
   return(list(x = as.magpie(soc25),
               weight = as.magpie(weight25),
               description = "Average SOC content by land type",
-              unit = "tonnes/ha"))
+              unit = "tonnes/ha",
+              isocountries = FALSE))
 }

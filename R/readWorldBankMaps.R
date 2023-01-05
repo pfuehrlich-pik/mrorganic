@@ -2,7 +2,8 @@
 #'
 #' Read World Bank Maps
 #'
-#' @param subtype data set to use (currently available "CountryBoundaries" and "DisputedAreasBoundaries")
+#' @param subtype data set to use (currently available "CountryPolygons",
+#' "CountryBoundaries" "DisputedAreas" and "DisputedAreasBoundaries")
 #' @return data
 #'
 #' @author Jan Philipp Dietrich
@@ -12,7 +13,7 @@
 #' }
 #' @seealso \code{\link{readSource}}
 
-readWorldBankMaps <- function(subtype = "CountryBoundaries") {
+readWorldBankMaps <- function(subtype = "CountryPolygons") {
   r <- terra::vect(Sys.glob("*/*.shp"))
-  return(list(x = r, class = "SpatVector"))
+  return(list(x = r, class = "SpatVector", cache = FALSE))
 }

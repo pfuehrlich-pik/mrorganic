@@ -4,10 +4,11 @@
 \alias{readWorldBankMaps}
 \title{readWorldBankMaps}
 \usage{
-readWorldBankMaps(subtype = "CountryBoundaries")
+readWorldBankMaps(subtype = "CountryPolygons")
 }
 \arguments{
-\item{subtype}{data set to use (currently available "CountryBoundaries" and "DisputedAreasBoundaries")}
+\item{subtype}{data set to use (currently available "CountryPolygons",
+"CountryBoundaries" "DisputedAreas" and "DisputedAreasBoundaries")}
 }
 \value{
 data
