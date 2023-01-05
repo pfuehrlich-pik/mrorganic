@@ -35,8 +35,16 @@ calcSOCbyLandType <- function() {
   soc   <- terra::project(soc, weight)
   soc25 <- terra::aggregate(soc * weight, fact = 30, fun = "sum") / weight25
 
-  return(list(x = as.magpie(soc25),
-              weight = as.magpie(weight25),
+  # add country ISO codes
+  countryCodes <- calcOutput("WorldCountries", aggregate = FALSE)
+
+  x <- as.magpie(soc25)
+  getItems(x, dim = "country", maindim = 1) <- terra::extract(countryCodes, getCoords(x))$value
+  weight <- as.magpie(weight25)
+  getItems(weight, dim = "country", maindim = 1) <- terra::extract(countryCodes, getCoords(weight))$value
+
+  return(list(x = x,
+              weight = weight,
               description = "Average SOC content by land type",
               unit = "tonnes/ha",
               isocountries = FALSE))
