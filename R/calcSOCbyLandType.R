@@ -52,7 +52,9 @@ calcSOCbyLandType <- function() {
 
   # add country ISO codes
   worldCountries <- calcOutput("WorldCountries", aggregate = FALSE)
-  countryCodes <- terra::extract(worldCountries, getCoords(x))$value
+  countryMap <- terra::mask(terra::rasterize(worldCountries, soc25, "value"), soc25[[1]])
+  countryCodes <- as.data.frame(countryMap, na.rm=FALSE)[terra::cellFromXY(countryMap, getCoords(x)),]
+  countryCodes <- levels(countryCodes)[countryCodes]
   getItems(x, dim = "country", maindim = 1)      <- countryCodes
   getItems(weight, dim = "country", maindim = 1) <- countryCodes
   message("Country codes added. (6/6)")
