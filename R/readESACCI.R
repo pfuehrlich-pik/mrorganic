@@ -11,7 +11,6 @@
 #' a <- readSource("ESACCI")
 #' }
 #' @seealso \code{\link{readSource}}
-#' @importFrom terra rast
 
 readESACCI <- function(subtype = "landcover2010") {
   r <- terra::rast(Sys.glob("*.tif"))
