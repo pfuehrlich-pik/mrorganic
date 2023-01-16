@@ -25,7 +25,7 @@ calcLandTypeAreasAggregated <- function(res, zeroValue = 0) {
   fact <- round(res / terra::res(x), 2)
 
   # check if fact is an integer value
-  if(!identical(round(fact), fact)) stop("Resolution must be a integer multiple of ", terra::res(x)[1])
+  if (!identical(round(fact), fact)) stop("Resolution must be a integer multiple of ", terra::res(x)[1])
 
   # aggregate area information to SOC resolution and add very small area to each cell
   # ensuring that all values are > 0 so that it can be used as weight
