@@ -51,6 +51,12 @@ calcWorldCountries <- function() {
   out <- do.call(rbind, unname(outList))
   terra::values(out) <- unique(all$ISO_A3)
 
+  # fill gaps with GADM data
+  gadmData <- readSource("GADM")
+  terra::values(gadmData) <- terra::values(gadmData)$GID_0
+  names(gadmData) <- "value"
+  out <- rbind(out, gadmData)
+
   return(list(x = out,
               description = "World country areas with all disputed areas mapped to a country",
               unit = "1",
