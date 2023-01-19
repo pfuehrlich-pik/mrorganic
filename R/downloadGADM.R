@@ -1,6 +1,6 @@
 downloadGADM <- function() {
-  # TODO parallel downloads
-  geodata::gadm(madrat::getISOlist(), 0, ".", version = "4.1", resolution = 2)
+  countryCodes <- setdiff(madrat::getISOlist(), c("HKG", "MAC")) # Hongkong and Macao are missing
+  geodata::gadm(countryCodes, level = 0, path = ".", version = "4.1", resolution = 2)
 
   return(list(url          = "https://gadm.org/data.html",
               doi          = NULL,

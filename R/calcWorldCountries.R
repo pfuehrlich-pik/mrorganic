@@ -14,48 +14,15 @@
 calcWorldCountries <- function() {
   terra::terraOptions(tempdir = getConfig("tmpfolder"))
 
-  country  <- readSource("WorldBankMaps", subtype = "CountryPolygons")
-  disputed <- readSource("WorldBankMaps", subtype = "DisputedAreas")
-
-  # replace missing ISO codes
-  map <- c("21" = "FRA",
-           "51" = "NOR",
-           "63"  = "XKS",
-           "130" = "GTMO",
-           "233" = "FRA",
-           "239" = "AUS",
-           "240" = "AUS")
-  for (i in names(map)) {
-    country$ISO_A3[as.integer(i)] <- map[i]
-  }
-
-  mapDisputed <- c("CHN", "IND", "MAR", "SDN", "IND", "CYP")
-  for (i in seq_along(mapDisputed)) {
-    disputed$ISO_A3[i] <- mapDisputed[i]
-  }
-
-  ssd <- terra::buffer(country[14], 50)
-  country <- rbind(country[-14], ssd)
-
-  mar <- terra::buffer(disputed[3], 50)
-  disputed <- rbind(disputed[-3], mar)
-
-  all <- rbind(country, disputed[-6])
-
-  outList <- NULL
-
-  for (iso in unique(all$ISO_A3)) {
-    outList[[iso]] <- terra::aggregate(all[all$ISO_A3 %in% iso, "ISO_A3"])
-  }
-
-  out <- do.call(rbind, unname(outList))
-  terra::values(out) <- unique(all$ISO_A3)
-
-  # fill gaps with GADM data
   gadmData <- readSource("GADM")
-  terra::values(gadmData) <- terra::values(gadmData)$GID_0
-  names(gadmData) <- "value"
-  out <- rbind(out, gadmData)
+
+  # fill gaps with WorldBank data
+  worldBankData <- readSource("WorldBankMaps", subtype = "CountryPolygons")
+  missingCountries <- worldBankData[worldBankData$ISO_A3 %in% c("HKG", "MAC"), c("ISO_A3", "FORMAL_EN")]
+  names(missingCountries) <- c("GID_0", "COUNTRY")
+  out <- rbind(gadmData, missingCountries)
+
+  names(out) <- c("ISO", "COUNTRY")
 
   return(list(x = out,
               description = "World country areas with all disputed areas mapped to a country",
