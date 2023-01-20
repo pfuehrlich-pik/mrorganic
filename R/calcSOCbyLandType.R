@@ -7,7 +7,7 @@
 #' @author Jan Philipp Dietrich
 #' @examples
 #' \dontrun{
-#' a <- calcOutput("LandTypeAreas")
+#' a <- calcOutput("SOCbyLandType")
 #' }
 #' @seealso \code{\link{calcOutput}}
 

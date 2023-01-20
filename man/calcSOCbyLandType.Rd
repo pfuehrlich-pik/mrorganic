@@ -14,7 +14,7 @@ Estimate soil organic carbon content split by land type
 }
 \examples{
 \dontrun{
-a <- calcOutput("LandTypeAreas")
+a <- calcOutput("SOCbyLandType")
 }
 }
 \seealso{
