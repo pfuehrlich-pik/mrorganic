@@ -36,11 +36,12 @@ calcSOCbyLandType <- function() {
 
   # aggregate weight to intermediate target resolution
   # (for further processing to happen in memory)
-  weight25 <- terra::aggregate(weight, fact = 30, fun = "sum", na.rm=TRUE)
+  weight25 <- terra::aggregate(weight, fact = 30, fun = "sum", na.rm = TRUE)
   message("Land use aggregation to 0.25deg completed. (3/6)")
 
   # area weighted aggregation of SOC to 0.25 degree
   soc25 <- terra::aggregate(soc * weight, fact = 30, fun = "sum", na.rm = TRUE) / weight25
+  names(soc25) <- names(weight25)
   message("Area weighted SOC aggregation to 0.25deg completed. (4/6)")
 
   # convert to magpie objects and clean coordinate values
@@ -53,15 +54,41 @@ calcSOCbyLandType <- function() {
   # add country ISO codes
   worldCountries <- calcOutput("WorldCountries", aggregate = FALSE)
   countryMap <- terra::mask(terra::rasterize(worldCountries, soc25, "value", touches = TRUE), soc25[[1]])
-  countryCodes <- as.data.frame(countryMap, na.rm=FALSE)[terra::cellFromXY(countryMap, getCoords(x)),]
+  countryCodes <- as.data.frame(countryMap, na.rm = FALSE)[terra::cellFromXY(countryMap, getCoords(x)), ]
   countryCodes <- levels(countryCodes)[countryCodes]
   getItems(x, dim = "country", maindim = 1)      <- countryCodes
   getItems(weight, dim = "country", maindim = 1) <- countryCodes
   message("Country codes added. (6/6)")
 
+  # add empty cells for missing countries
+  .fixCountries <- function(x) {
+    status <- getItems(x, "country")
+    target <- getISOlist()
+    # remove cells not mapped to a country
+    unknown <- setdiff(status, target)
+    missing <- setdiff(target, status)
+    if (length(unknown) > 0) {
+      warning('Remove cells with unknown country codes: "', paste0(unknown, collapse = '", "'), '"')
+      x <- x[unknown, , , invert = TRUE]
+    }
+    if (length(missing) > 0) {
+      warning('Add empty cells for missing countries: "', paste0(missing, collapse = '", "'), '"')
+      tmp <- x[seq_along(missing), , ]
+      tmp[, , ] <- 0
+      getItems(tmp, dim = 1, raw = TRUE) <- paste0("0p0.0p0.", missing)
+      x <- mbind(x, tmp)
+    }
+    return(x)
+  }
+  x <- .fixCountries(x)
+  weight <- .fixCountries(weight)
+
   return(list(x = x,
               weight = weight,
               description = "Average SOC content by land type",
               unit = "tonnes/ha",
+              min = 0,
+              structure.spatial = "-?[0-9]*p[0-9]*\\.-?[0-9]*p[0-9]*\\.[A-Z]{3}",
+              structure.data = "(cropland|grassland|other)",
               isocountries = FALSE))
 }
