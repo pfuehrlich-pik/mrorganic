@@ -1,23 +1,29 @@
-Package: mrorganic
 Type: Package
+Package: mrorganic
 Title: madrat based MAgPIE Input Data Library
 Version: 0.1.0
 Date: 2023-01-16
-Authors@R: person("Jan Philipp", "Dietrich", email = "dietrich@pik-potsdam.de", role = c("aut","cre"))
-Description: Provides functions for MAgPIE country and cellular input data generation.
+Authors@R: c(
+    person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
+    person("Pascal", "Führlich", , "pascal.fuehrlich@pik-potsdam.de", role = "aut")
+  )
+Description: Provides functions for MAgPIE country and cellular input data
+    generation.
+License: LGPL-3 | file LICENSE
 Depends:
-    R(>= 2.10.0),
-    magclass(>= 3.17),
     madrat(>= 2.22.0),
+    magclass(>= 3.17),
+    R(>= 2.10.0)
 Imports:
+    geodata,
     terra,
     utils
-License: LGPL-3 | file LICENSE
-LazyData: no
-Encoding: UTF-8
-RoxygenNote: 7.2.3
 Suggests:
+    covr,
     knitr,
-    rmarkdown,
-    covr
-VignetteBuilder: knitr
+    rmarkdown
+VignetteBuilder:
+    knitr
+Encoding: UTF-8
+LazyData: no
+RoxygenNote: 7.2.3

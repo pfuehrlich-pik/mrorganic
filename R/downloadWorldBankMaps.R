@@ -1,5 +1,3 @@
-#' @importFrom utils download.file
-
 downloadWorldBankMaps <- function(subtype = "CountryPolygons") {
   baseurl <- "https://datacatalogfiles.worldbank.org/ddh-published/0038272/"
   # Define subtype-specific elements of the meta data. Elements that are common to all subtypes are added further down.
@@ -17,7 +15,7 @@ downloadWorldBankMaps <- function(subtype = "CountryPolygons") {
                                         url = paste0(baseurl, "DR0046660/wb_disputed_areas_admin0_10m.zip")))
   meta <- toolSubtypeSelect(subtype, settings)
 
-  download.file(meta$url, destfile = "tmp.zip")
+  utils::download.file(meta$url, destfile = "tmp.zip")
   utils::unzip("tmp.zip")
   unlink("tmp.zip")
 

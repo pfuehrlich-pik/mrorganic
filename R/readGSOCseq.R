@@ -11,7 +11,6 @@
 #' a <- readSource("GSOCseq")
 #' }
 #' @seealso \code{\link{readSource}}
-#' @importFrom terra rast
 
 readGSOCseq <- function(subtype = "ini") {
   r <- terra::rast(Sys.glob("*.tif"))

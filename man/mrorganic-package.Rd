@@ -11,4 +11,9 @@ Provides functions for MAgPIE country and cellular input data generation.
 \author{
 \strong{Maintainer}: Jan Philipp Dietrich \email{dietrich@pik-potsdam.de}
 
+Authors:
+\itemize{
+  \item Pascal Führlich \email{pascal.fuehrlich@pik-potsdam.de}
+}
+
 }

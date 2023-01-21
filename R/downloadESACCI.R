@@ -1,5 +1,3 @@
-#' @importFrom utils download.file
-
 downloadESACCI <- function(subtype = "landcover2010") {
   baseurl <- "ftp://geo10.elie.ucl.ac.be/CCI/"
   # Define subtype-specific elements of the meta data. Elements that are common to all subtypes are added further down.
@@ -13,9 +11,9 @@ downloadESACCI <- function(subtype = "landcover2010") {
                                           "Available at: ",
                                           "maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf")))
   meta <- toolSubtypeSelect(subtype, settings)
-  download.file(meta$url, destfile = basename(meta$url))
+  utils::download.file(meta$url, destfile = basename(meta$url))
 
-  download.file("http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Legend.csv", destfile = "legend.csv")
+  utils::download.file("http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Legend.csv", destfile = "legend.csv")
 
   # Compose meta data by adding elements that are the same for all subtypes.
   return(list(url           = meta$url,

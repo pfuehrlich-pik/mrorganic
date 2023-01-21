@@ -1,5 +1,3 @@
-#' @importFrom utils download.file
-
 downloadGSOCseq <- function(subtype = "ini") {
   # Define subtype-specific elements of the meta data. Elements that are common to all subtypes are added further down.
   settings <- list(ini = list(title = "Initial SOC Stocks (t0)",
@@ -11,7 +9,7 @@ downloadGSOCseq <- function(subtype = "ini") {
                               url = "http://54.229.242.119/GSOCseqv1.1/GSOCseq_finalSOC_SSM1_Map030.tif"))
   meta <- toolSubtypeSelect(subtype, settings)
 
-  download.file(meta$url, destfile = basename(meta$url))
+  utils::download.file(meta$url, destfile = basename(meta$url))
 
   # Compose meta data by adding elements that are the same for all subtypes.
   return(list(url           = meta$url,

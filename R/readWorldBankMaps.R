@@ -3,7 +3,7 @@
 #' Read World Bank Maps
 #'
 #' @param subtype data set to use (currently available "CountryPolygons",
-#' "CountryBoundaries" "DisputedAreas" and "DisputedAreasBoundaries")
+#' "CountryBoundaries", "DisputedAreas" and "DisputedAreasBoundaries")
 #' @return data
 #'
 #' @author Jan Philipp Dietrich
