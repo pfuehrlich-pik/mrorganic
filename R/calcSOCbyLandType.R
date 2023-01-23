@@ -46,14 +46,14 @@ calcSOCbyLandType <- function() {
 
   # convert to magpie objects and clean coordinate values
   x <- as.magpie(soc25)
-  getCoords(x) <- round(getCoords(x), 2)
+  getCoords(x) <- round(getCoords(x), 3)
   weight <- as.magpie(weight25)
-  getCoords(weight) <- round(getCoords(weight), 2)
+  getCoords(weight) <- round(getCoords(weight), 3)
   message("Conversion to magclass completed. (5/6)")
 
   # add country ISO codes
   worldCountries <- calcOutput("WorldCountries", aggregate = FALSE)
-  countryMap   <- terra::mask(terra::rasterize(worldCountries, soc25, "value"), soc25[[1]])
+  countryMap   <- terra::mask(terra::rasterize(worldCountries, soc25, "ISO"), soc25[[1]])
   countryCodes <- as.data.frame(countryMap, na.rm = FALSE)[terra::cellFromXY(countryMap, getCoords(x)), ]
   countryCodes <- levels(countryCodes)[countryCodes]
   getItems(x, dim = "country", maindim = 1)      <- countryCodes
