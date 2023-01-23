@@ -7,13 +7,16 @@
 #' for GTAP11 world regions.
 #' @author Jan Philipp Dietrich
 #' @seealso
-#' \code{\link{readSource}},\code{\link{getCalculations}},\code{\link{calcOutput}},\code{\link{setConfig}}
+#' \code{\link{retrieveData}}, \code{\link{calcOutput}}, \code{\link{readSource}},
+#' \code{\link{setConfig}}
 #' @examples
 #' \dontrun{
-#' retrieveData("Organic", regionmapping = "regionmappingGTAP11.csv")
+#' retrieveData("Organic", rev = 1, regionmapping = "regionmappingGTAP11.csv")
 #' }
 #'
-fullORGANIC <- function() {
+fullORGANIC <- function(rev) {
+
+  if(rev != 1) stop("rev has to be set to 1! Other data revisions are currently not available!")
 
   .plotMap <- function(x) {
     for (i in getItems(x, dim = 3)) {

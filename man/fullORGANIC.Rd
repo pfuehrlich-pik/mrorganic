@@ -4,7 +4,7 @@
 \alias{fullORGANIC}
 \title{fullORGANIC}
 \usage{
-fullORGANIC()
+fullORGANIC(rev)
 }
 \description{
 Bundle function for mrorganic which bundles all relevant outputs and write
@@ -16,12 +16,13 @@ for GTAP11 world regions.
 }
 \examples{
 \dontrun{
-retrieveData("Organic", regionmapping = "regionmappingGTAP11.csv")
+retrieveData("Organic", rev = 1, regionmapping = "regionmappingGTAP11.csv")
 }
 
 }
 \seealso{
-\code{\link{readSource}},\code{\link{getCalculations}},\code{\link{calcOutput}},\code{\link{setConfig}}
+\code{\link{retrieveData}}, \code{\link{calcOutput}}, \code{\link{readSource}},
+\code{\link{setConfig}}
 }
 \author{
 Jan Philipp Dietrich
