@@ -1,8 +1,8 @@
 Type: Package
 Package: mrorganic
 Title: madrat based MAgPIE Input Data Library
-Version: 0.1.0
-Date: 2023-01-16
+Version: 0.3.0
+Date: 2023-01-23
 Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Pascal", "Führlich", , "pascal.fuehrlich@pik-potsdam.de", role = "aut")

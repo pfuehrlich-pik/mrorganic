@@ -1,12 +1,13 @@
 # madrat based MAgPIE Input Data Library
 
-R package **mrorganic**, version **0.1.0**
+R package **mrorganic**, version **0.3.0**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrorganic)](https://cran.r-project.org/package=mrorganic)  [![R build status](https://github.com/tscheypidi/mrorganic/workflows/check/badge.svg)](https://github.com/tscheypidi/mrorganic/actions) [![codecov](https://codecov.io/gh/tscheypidi/mrorganic/branch/master/graph/badge.svg)](https://app.codecov.io/gh/tscheypidi/mrorganic) 
 
 ## Purpose and Functionality
 
-Provides functions for MAgPIE country and cellular input data generation.
+Provides functions for MAgPIE country and cellular input data
+    generation.
 
 
 ## Installation
@@ -38,15 +39,15 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrorganic** in publications use:
 
-Dietrich J (2023). _mrorganic: madrat based MAgPIE Input Data Library_. R package version 0.1.0.
+Dietrich J, Führlich P (2023). _mrorganic: madrat based MAgPIE Input Data Library_. R package version 0.3.0.
 
 A BibTeX entry for LaTeX users is
 
  ```latex
 @Manual{,
   title = {mrorganic: madrat based MAgPIE Input Data Library},
-  author = {Jan Philipp Dietrich},
+  author = {Jan Philipp Dietrich and Pascal Führlich},
   year = {2023},
-  note = {R package version 0.1.0},
+  note = {R package version 0.3.0},
 }
 ```

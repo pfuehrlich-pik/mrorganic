@@ -1,10 +1,13 @@
 {
   "title": "mrorganic: madrat based MAgPIE Input Data Library",
-  "version": "0.1.0",
-  "description": "<p>Provides functions for MAgPIE country and cellular input data generation.<\/p>",
+  "version": "0.3.0",
+  "description": "<p>Provides functions for MAgPIE country and cellular input data\n    generation.<\/p>",
   "creators": [
     {
       "name": "Dietrich, Jan Philipp"
+    },
+    {
+      "name": "Führlich, Pascal"
     }
   ]
 }
