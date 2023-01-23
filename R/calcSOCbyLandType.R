@@ -45,43 +45,62 @@ calcSOCbyLandType <- function() {
   message("Area weighted SOC aggregation to 0.25deg completed. (4/6)")
 
   # convert to magpie objects and clean coordinate values
-  x <- as.magpie(soc25)
-  getCoords(x) <- round(getCoords(x), 3)
-  weight <- as.magpie(weight25)
-  getCoords(weight) <- round(getCoords(weight), 3)
-  message("Conversion to magclass completed. (5/6)")
+  .clean2magpie <- function(x) {
+    x <- as.magpie(x)
+    getCoords(x) <- round(getCoords(x), 3)
+    return(x)
+  }
 
   # add country ISO codes
-  worldCountries <- calcOutput("WorldCountries", aggregate = FALSE)
-  countryMap <- terra::mask(terra::rasterize(worldCountries, soc25, "ISO", touches = TRUE), soc25[[1]])
-  countryCodes <- as.data.frame(countryMap, na.rm = FALSE)[terra::cellFromXY(countryMap, getCoords(x)), ]
-  countryCodes <- levels(countryCodes)[countryCodes]
-  getItems(x, dim = "country", maindim = 1)      <- countryCodes
-  getItems(weight, dim = "country", maindim = 1) <- countryCodes
-  message("Country codes added. (6/6)")
+  .getCountryTemplate <- function() {
+    worldCountries <- calcOutput("WorldCountries", aggregate = FALSE)
+    worldRaster <- terra::rasterize(worldCountries, soc25, "ISO", touches = TRUE)
+    template <- .clean2magpie(worldRaster)
+    return(template)
+  }
 
-  # add empty cells for missing countries
-  .fixCountries <- function(x) {
+  .fixCountries <- function(x, missingValue, silent = FALSE) {
     status <- getItems(x, "country")
     target <- getISOlist()
     # remove cells not mapped to a country
     unknown <- setdiff(status, target)
     missing <- setdiff(target, status)
     if (length(unknown) > 0) {
-      warning('Remove cells with unknown country codes: "', paste0(unknown, collapse = '", "'), '"')
+      if (!isTRUE(silent)) {
+        warning('Remove cells with unknown country codes: "', paste0(unknown, collapse = '", "'), '"')
+      }
       x <- x[unknown, , , invert = TRUE]
     }
     if (length(missing) > 0) {
-      warning('Add empty cells for missing countries: "', paste0(missing, collapse = '", "'), '"')
+      if (!isTRUE(silent)) {
+        message('Add empty cells for missing countries: "', paste0(missing, collapse = '", "'), '"')
+      }
       tmp <- x[seq_along(missing), , ]
-      tmp[, , ] <- 0
-      getItems(tmp, dim = 1, raw = TRUE) <- paste0("0p0.0p0.", missing)
+      tmp[, , ] <- missingValue
+      getItems(tmp, dim = 1, raw = TRUE) <- paste0("-70p0.25p0.", missing)
       x <- mbind(x, tmp)
     }
     return(x)
   }
-  x <- .fixCountries(x)
-  weight <- .fixCountries(weight)
+
+  .convert2magpie <- function(x, template, missing = NA, silent = FALSE) {
+    x <- .clean2magpie(x)
+    countries <- as.vector(template)
+    out <- new.magpie(getItems(template, dim = 1), getItems(x, dim = 2), getItems(x, dim = 3), fill = missing)
+    getSets(out) <- getSets(x)
+
+    match <- intersect(getItems(out, dim = 1, split = FALSE), getItems(x, dim = 1, split = FALSE))
+    out[match, , ] <- x[match, , ]
+    getItems(out, dim = "country", maindim = 1) <- countries
+    return(.fixCountries(out, missing, silent))
+  }
+
+  template <- .getCountryTemplate()
+  x        <- .convert2magpie(soc25, template, missing = 0)
+  weight   <- .convert2magpie(weight25, template, missing = 10^-10, silent = TRUE)
+  message("Conversion to magclass completed. (5/6)")
+
+  #message("Filling of gaps completed. (6/6)")
 
   return(list(x = x,
               weight = weight,
