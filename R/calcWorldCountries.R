@@ -14,7 +14,15 @@
 calcWorldCountries <- function() {
   terra::terraOptions(tempdir = getConfig("tmpfolder"))
 
-  gadmData <- readSource("GADM")
+  gadmDataRaw <- readSource("GADM")
+  disputedAreaCountries <- gadmDataRaw$COUNTRY[!gadmDataRaw$GID_0 %in% madrat::getISOlist()]
+  # aggregate by COUNTRY to deal with disputed areas
+  aggregatedCountries <- terra::aggregate(gadmDataRaw[gadmDataRaw$COUNTRY %in% disputedAreaCountries],
+                                          by = "COUNTRY")
+  aggregatedCountries$GID_0 <- madrat::toolCountry2isocode(aggregatedCountries$COUNTRY)
+  aggregatedCountries <- aggregatedCountries[, c("GID_0", "COUNTRY")]
+  gadmData <- rbind(gadmDataRaw[!gadmDataRaw$COUNTRY %in% disputedAreaCountries],
+                    aggregatedCountries)
 
   # fill gaps with WorldBank data
   worldBankData <- readSource("WorldBankMaps", subtype = "CountryPolygons")
@@ -24,6 +32,9 @@ calcWorldCountries <- function() {
 
   names(out) <- c("ISO", "COUNTRY")
 
+  if (!setequal(out$ISO, madrat::getISOlist())) {
+    warning("calcWorldCountries ISO codes are not setequal to madrat::getISOlist")
+  }
   return(list(x = out,
               description = "World country areas with all disputed areas mapped to a country",
               unit = "1",

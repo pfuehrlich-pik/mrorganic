@@ -20,8 +20,7 @@ calcSOCbyLandType <- function() {
   # read in SOC data
   soc <- readSource("GSOCseq", subtype = "ini", convert = FALSE)
 
-  # get soc resolution. Rounding is performed to fix a representation problem
-  # of the float value
+  # get soc resolution
   res <- round(terra::res(soc)[1], 9)
 
   # read in aggregated area information and setting zeroValue to 10^-10 to ensure
