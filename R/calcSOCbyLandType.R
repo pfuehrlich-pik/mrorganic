@@ -53,7 +53,7 @@ calcSOCbyLandType <- function() {
 
   # add country ISO codes
   worldCountries <- calcOutput("WorldCountries", aggregate = FALSE)
-  countryMap   <- terra::mask(terra::rasterize(worldCountries, soc25, "ISO"), soc25[[1]])
+  countryMap <- terra::mask(terra::rasterize(worldCountries, soc25, "ISO", touches = TRUE), soc25[[1]])
   countryCodes <- as.data.frame(countryMap, na.rm = FALSE)[terra::cellFromXY(countryMap, getCoords(x)), ]
   countryCodes <- levels(countryCodes)[countryCodes]
   getItems(x, dim = "country", maindim = 1)      <- countryCodes
