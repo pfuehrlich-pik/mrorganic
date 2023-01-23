@@ -76,7 +76,7 @@ calcSOCbyLandType <- function() {
       }
       tmp <- x[seq_along(missing), , ]
       tmp[, , ] <- missingValue
-      getItems(tmp, dim = 1, raw = TRUE) <- paste0("-70p0.25p0.", missing)
+      getItems(tmp, dim = 1, raw = TRUE) <- paste0("-70p125.25p125.", missing)
       x <- mbind(x, tmp)
     }
     return(x)

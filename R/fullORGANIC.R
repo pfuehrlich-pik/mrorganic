@@ -15,13 +15,22 @@
 #'
 fullORGANIC <- function() {
 
+  .plotMap <- function(x) {
+    for (i in getItems(x, dim = 3)) {
+      grDevices::png(paste0(i, ".png"), width = 800, height = 400)
+      terra::plot(as.SpatRaster(x[, , i]))
+      grDevices::dev.off()
+    }
+  }
+
   # regional SOC output
-  calcOutput("SOCbyLandType", file = "soc_region.cs2")
+  calcOutput("SOCbyLandType", file = "soc_region.cs2", round = 2)
 
   # country SOC output
-  calcOutput("SOCbyLandType", aggregate = "country", file = "soc_region.cs2")
+  calcOutput("SOCbyLandType", aggregate = "country", file = "soc_country.cs2", round = 2)
 
   # gridded SOC output
-  calcOutput("SOCbyLandType", aggregate = FALSE, file = "soc.nc")
+  soc <- calcOutput("SOCbyLandType", aggregate = FALSE, file = "soc.nc")
+  .plotMap(soc)
 
 }
