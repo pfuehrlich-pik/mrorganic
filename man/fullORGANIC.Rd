@@ -6,6 +6,9 @@
 \usage{
 fullORGANIC(rev)
 }
+\arguments{
+\item{rev}{data revision}
+}
 \description{
 Bundle function for mrorganic which bundles all relevant outputs and write
 them to a tgz file.
@@ -16,7 +19,7 @@ for GTAP11 world regions.
 }
 \examples{
 \dontrun{
-retrieveData("Organic", rev = 1, regionmapping = "regionmappingGTAP11.csv")
+retrieveData("Organic", rev = 1,  cachetype = "def", regionmapping = "regionmappingGTAP11.csv")
 }
 
 }

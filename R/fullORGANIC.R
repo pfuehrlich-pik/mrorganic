@@ -5,13 +5,15 @@
 #'
 #' Use \code{regionmapping = "regionmappingGTAP11.csv")} to produce outputs
 #' for GTAP11 world regions.
+#'
+#' @param rev data revision
 #' @author Jan Philipp Dietrich
 #' @seealso
 #' \code{\link{retrieveData}}, \code{\link{calcOutput}}, \code{\link{readSource}},
 #' \code{\link{setConfig}}
 #' @examples
 #' \dontrun{
-#' retrieveData("Organic", rev = 1, regionmapping = "regionmappingGTAP11.csv")
+#' retrieveData("Organic", rev = 1,  cachetype = "def", regionmapping = "regionmappingGTAP11.csv")
 #' }
 #'
 fullORGANIC <- function(rev) {
