@@ -36,8 +36,8 @@ fullORGANIC <- function(rev) {
 
   # gridded SOC output
   soc <- calcOutput("SOCbyLandType", aggregate = FALSE, supplementary = TRUE, file = "soc.nc")
-  write.magpie(round(soc$x, 2), "soc.cs2")
-  write.magpie(round(soc$weight, 2), "landcover.cs2")
+  write.magpie(round(soc$x, 2), "soc.cs5")
+  write.magpie(round(soc$weight, 2), "landcover.cs5")
   write.magpie(round(soc$weight, 2), "landcover.nc")
   .plotMap(soc$x)
 
