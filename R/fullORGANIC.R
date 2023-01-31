@@ -13,7 +13,7 @@
 #' \code{\link{setConfig}}
 #' @examples
 #' \dontrun{
-#' retrieveData("Organic", rev = 1,  cachetype = "def", regionmapping = "regionmappingGTAP11.csv")
+#' retrieveData("Organic", rev = 1, regionmapping = "regionmappingGTAP11.csv")
 #' }
 #'
 fullORGANIC <- function(rev) {
