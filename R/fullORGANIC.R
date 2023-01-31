@@ -35,7 +35,7 @@ fullORGANIC <- function(rev) {
   calcOutput("SOCbyLandType", aggregate = "country", file = "soc_country.cs2", round = 2)
 
   # gridded SOC output
-  soc <- calcOutput("SOCbyLandType", aggregate = FALSE, file = "soc.nc")
+  soc <- calcOutput("SOCbyLandType", aggregate = FALSE, supplementary = TRUE, file = "soc.nc")
   write.magpie(round(soc$x, 2), "soc.cs2")
   write.magpie(round(soc$weight, 2), "landcover.cs2")
   write.magpie(round(soc$weight, 2), "landcover.nc")
