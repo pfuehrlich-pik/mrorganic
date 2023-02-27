@@ -7,7 +7,7 @@ downloadSpawn <- function() {
   if (length(zipFile) < 1) stop("No zip file found!")
   if (length(zipFile) > 1) stop("More than one zip file found!")
 
-  unzip(zipFile, unzip="unzip", junkpaths = TRUE)
+  unzip(zipFile, unzip = "unzip", junkpaths = TRUE)
   unlink(zipFile)
 
   return(list(url          = "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1763",

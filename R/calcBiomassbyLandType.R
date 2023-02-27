@@ -1,7 +1,8 @@
-#' Calculate SOC by land type
+#' Calculate Biomass by land type
 #'
 #' Estimate soil organic carbon content split by land type
 #'
+#' @param type "aboveground" or "belowground"
 #' @return data
 #'
 #' @author Jan Philipp Dietrich
@@ -11,29 +12,26 @@
 #' }
 #' @seealso \code{\link{calcOutput}}
 
-calcSOCbyLandType <- function() {
+calcBiomassByLandType <- function(type) {
+
+  subtype <- toolSubtypeSelect(type, c(aboveground = "abovegroundBiomasss",
+                                       belowground = "belowgroundBiomass"))
 
   terra::terraOptions(tempdir = getConfig("tmpfolder"))
 
   message("Please be patient, this will take now a while.")
 
-  # read in SOC data
-  soc <- readSource("GSOCseq", subtype = "ini", convert = FALSE)
-
-  # get soc resolution
-  res <- round(terra::res(soc)[1], 9)
-
-  # read in aggregated area information and setting zeroValue to 10^-10 to ensure
-  # that all values are > 0 so that it can be used as weight
-  weight <- calcOutput("LandTypeAreasAggregated", res = res, zeroValue = 10^-10, aggregate = FALSE)
+  # read in biomass data
+  biomass <- readSource("Spawn", subtype = subtype, convert = FALSE)
+  weight  <- calcOutput("LandTypeAreas", aggregate = FALSE) + 10^-10
   message("Relevant data read in.")
 
-  out <- toolAggregateByLandType(soc, weight)
+  out <- toolAggregateByLandType(biomass, weight)
 
   return(list(x = out$x,
               weight = out$weight,
-              description = "Average SOC content by land type",
-              unit = "tonnes/ha",
+              description = paste("Average", type, "biomass content by land type"),
+              unit = "Mg C ha-1",
               min = 0,
               structure.spatial = "-?[0-9]*p[0-9]*\\.-?[0-9]*p[0-9]*\\.[A-Z]{3}",
               structure.data = "(cropland|grassland|other)",
