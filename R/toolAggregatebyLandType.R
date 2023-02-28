@@ -3,7 +3,7 @@
 #' Aggregate raster object by land type and return as 0.25degx0.25deg magclass
 #' object
 #'
-#' @param xdata to be aggregated
+#' @param x data to be aggregated
 #' @param weight weight to be used for aggregation (land type)
 #' @return data
 #'

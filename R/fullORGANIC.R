@@ -41,4 +41,14 @@ fullORGANIC <- function(rev) {
   write.magpie(round(soc$weight, 2), "landcover.nc")
   .plotMap(soc$x)
 
+  for (i in c("aboveground", "belowground")) {
+    calcOutput("BiomassByLandType", subtype = i,
+               file = paste0(i, "_biomass_region.cs2"), round = 2)
+    calcOutput("BiomassByLandType", subtype = i, aggregate = "country",
+               file = paste0(i, "_biomass_country.cs2"), round = 2)
+    biomass <- calcOutput("BiomassByLandType", subtype = i, aggregate = FALSE,
+                          file = paste0(i, ".nc"))
+    write.magpie(round(biomass, 2), paste0(i, ".cs5"))
+    .plotMap(biomass)
+  }
 }
