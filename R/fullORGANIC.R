@@ -13,12 +13,12 @@
 #' \code{\link{setConfig}}
 #' @examples
 #' \dontrun{
-#' retrieveData("Organic", rev = 1, regionmapping = "regionmappingGTAP11.csv")
+#' retrieveData("Organic", rev = 2, regionmapping = "regionmappingGTAP11.csv")
 #' }
 #'
 fullORGANIC <- function(rev) {
 
-  if (rev != 1) stop("rev has to be set to 1! Other data revisions are currently not available!")
+  if (rev != 2) stop("rev has to be set to 1! Other data revisions are currently not available!")
 
   .plotMap <- function(x) {
     for (i in getItems(x, dim = 3)) {
