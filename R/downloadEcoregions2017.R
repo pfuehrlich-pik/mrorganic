@@ -3,5 +3,4 @@ downloadEcoregions2017 <- function() {
                        "Ecoregions2017.zip", mode = "wb")
   utils::unzip("Ecoregions2017.zip")
   file.remove("Ecoregions2017.zip")
-  # TODO metadata
 }
