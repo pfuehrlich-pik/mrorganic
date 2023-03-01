@@ -2,7 +2,7 @@
 #'
 #' Estimate soil organic carbon content split by land type
 #'
-#' @param type "aboveground" or "belowground"
+#' @param subtype "aboveground" or "belowground"
 #' @return data
 #'
 #' @author Jan Philipp Dietrich
@@ -12,10 +12,12 @@
 #' }
 #' @seealso \code{\link{calcOutput}}
 
-calcBiomassByLandType <- function(type) {
+calcBiomassByLandType <- function(subtype) {
 
-  subtype <- toolSubtypeSelect(type, c(aboveground = "abovegroundBiomasss",
-                                       belowground = "belowgroundBiomass"))
+  name <- subtype
+
+  subtype <- toolSubtypeSelect(subtype, c(aboveground = "abovegroundBiomass",
+                                          belowground = "belowgroundBiomass"))
 
   terra::terraOptions(tempdir = getConfig("tmpfolder"))
 
@@ -30,7 +32,7 @@ calcBiomassByLandType <- function(type) {
 
   return(list(x = out$x,
               weight = out$weight,
-              description = paste("Average", type, "biomass content by land type"),
+              description = paste("Average", name, "biomass content by land type"),
               unit = "Mg C ha-1",
               min = 0,
               structure.spatial = "-?[0-9]*p[0-9]*\\.-?[0-9]*p[0-9]*\\.[A-Z]{3}",

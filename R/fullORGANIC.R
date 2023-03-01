@@ -13,12 +13,12 @@
 #' \code{\link{setConfig}}
 #' @examples
 #' \dontrun{
-#' retrieveData("Organic", rev = 1, regionmapping = "regionmappingGTAP11.csv")
+#' retrieveData("Organic", rev = 2, regionmapping = "regionmappingGTAP11.csv")
 #' }
 #'
 fullORGANIC <- function(rev) {
 
-  if (rev != 1) stop("rev has to be set to 1! Other data revisions are currently not available!")
+  if (rev != 2) stop("rev has to be set to 1! Other data revisions are currently not available!")
 
   .plotMap <- function(x) {
     for (i in getItems(x, dim = 3)) {
@@ -41,4 +41,14 @@ fullORGANIC <- function(rev) {
   write.magpie(round(soc$weight, 2), "landcover.nc")
   .plotMap(soc$x)
 
+  for (i in c("aboveground", "belowground")) {
+    calcOutput("BiomassByLandType", subtype = i,
+               file = paste0(i, "_biomass_region.cs2"), round = 2)
+    calcOutput("BiomassByLandType", subtype = i, aggregate = "country",
+               file = paste0(i, "_biomass_country.cs2"), round = 2)
+    biomass <- calcOutput("BiomassByLandType", subtype = i, aggregate = FALSE,
+                          file = paste0(i, ".nc"))
+    write.magpie(round(biomass, 2), paste0(i, ".cs5"))
+    .plotMap(biomass)
+  }
 }
