@@ -7,7 +7,7 @@ downloadSpawn <- function() {
   if (length(zipFile) < 1) stop("No zip file found!")
   if (length(zipFile) > 1) stop("More than one zip file found!")
 
-  unzip(zipFile, unzip = "unzip", junkpaths = TRUE)
+  utils::unzip(zipFile, unzip = "unzip", junkpaths = TRUE)
   unlink(zipFile)
 
   return(list(url          = "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1763",
@@ -29,14 +29,14 @@ downloadSpawn <- function() {
               version      = "1",
               release_date = "2020-04-22",
               license      = "https://www.earthdata.nasa.gov/learn/use-data/data-use-policy",
-              reference    = bibentry("Misc",
-                                      title = paste("Global Aboveground and Belowground Biomass Carbon",
-                                                    "Density Maps for the Year 2010"),
-                                      author = c(person("S.A.", "Spawn"),
-                                                 person("H.K.", "Gibbs")),
-                                      year = "2020",
-                                      publisher = "ORNL Distributed Active Archive Center",
-                                      language = "en",
-                                      url = "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1763",
-                                      doi = "10.3334/ORNLDAAC/1763")))
+              reference    = utils::bibentry("Misc",
+                                             title = paste("Global Aboveground and Belowground Biomass Carbon",
+                                                           "Density Maps for the Year 2010"),
+                                             author = c(utils::person("S.A.", "Spawn"),
+                                                        utils::person("H.K.", "Gibbs")),
+                                             year = "2020",
+                                             publisher = "ORNL Distributed Active Archive Center",
+                                             language = "en",
+                                             url = "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1763",
+                                             doi = "10.3334/ORNLDAAC/1763")))
 }
