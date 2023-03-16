@@ -18,7 +18,7 @@
 #'
 fullORGANIC <- function(rev) {
 
-  if (rev != 2) stop("rev has to be set to 1! Other data revisions are currently not available!")
+  if (rev != 2) stop("rev has to be set to 2! Other data revisions are currently not available!")
 
   .plotMap <- function(x) {
     for (i in getItems(x, dim = 3)) {

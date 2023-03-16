@@ -4,7 +4,11 @@
 \alias{calcLandTypeAreas}
 \title{Calculate land type areas}
 \usage{
-calcLandTypeAreas()
+calcLandTypeAreas(categories = "CropGrassOther")
+}
+\arguments{
+\item{categories}{Categories land should be segregated into. Only available
+option is currently "CropGrassOther".}
 }
 \value{
 data
