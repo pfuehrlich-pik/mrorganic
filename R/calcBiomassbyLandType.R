@@ -30,6 +30,11 @@ calcBiomassByLandType <- function(subtype) {
 
   out <- toolAggregateByLandType(biomass, weight)
 
+  # set values to 0 for cells with negligible weight
+  # doing so removes values for cells with missing land area for the
+  # the given type and thereby make the computed data unrealiable
+  out$x[round(out$weight, 6) == 0] <- 0
+
   return(list(x = out$x,
               weight = out$weight,
               description = paste("Average", name, "biomass content by land type"),
