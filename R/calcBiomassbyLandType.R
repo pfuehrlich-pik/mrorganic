@@ -8,7 +8,7 @@
 #' @author Jan Philipp Dietrich
 #' @examples
 #' \dontrun{
-#' a <- calcOutput("SOCbyLandType")
+#' a <- calcOutput("BiomassbyLandType", subtype = "aboveground")
 #' }
 #' @seealso \code{\link{calcOutput}}
 
@@ -25,7 +25,7 @@ calcBiomassByLandType <- function(subtype) {
 
   # read in biomass data
   biomass <- readSource("Spawn", subtype = subtype, convert = FALSE)
-  weight  <- calcOutput("LandTypeAreas", aggregate = FALSE) + 10^-10
+  weight  <- calcOutput("LandTypeAreas", categories = "CropGrassForestOthervegResidual", aggregate = FALSE) + 10^-10
   message("Relevant data read in.")
 
   out <- toolAggregateByLandType(biomass, weight)

@@ -8,7 +8,7 @@ calcLandTypeAreas(categories = "CropGrassOther")
 }
 \arguments{
 \item{categories}{Categories land should be segregated into. Only available
-option is currently "CropGrassOther".}
+options are currently "CropGrassOther" and "CropGrassForestOthervegResidual".}
 }
 \value{
 data

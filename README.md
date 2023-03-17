@@ -1,6 +1,6 @@
 # madrat based MAgPIE Input Data Library
 
-R package **mrorganic**, version **0.4.2**
+R package **mrorganic**, version **0.4.3**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrorganic)](https://cran.r-project.org/package=mrorganic)  [![R build status](https://github.com/tscheypidi/mrorganic/workflows/check/badge.svg)](https://github.com/tscheypidi/mrorganic/actions) [![codecov](https://codecov.io/gh/tscheypidi/mrorganic/branch/master/graph/badge.svg)](https://app.codecov.io/gh/tscheypidi/mrorganic) [![r-universe](https://pik-piam.r-universe.dev/badges/mrorganic)](https://pik-piam.r-universe.dev/builds)
 
@@ -39,7 +39,7 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrorganic** in publications use:
 
-Dietrich J, Führlich P (2023). _mrorganic: madrat based MAgPIE Input Data Library_. R package version 0.4.2.
+Dietrich J, Führlich P (2023). _mrorganic: madrat based MAgPIE Input Data Library_. R package version 0.4.3.
 
 A BibTeX entry for LaTeX users is
 
@@ -48,6 +48,6 @@ A BibTeX entry for LaTeX users is
   title = {mrorganic: madrat based MAgPIE Input Data Library},
   author = {Jan Philipp Dietrich and Pascal Führlich},
   year = {2023},
-  note = {R package version 0.4.2},
+  note = {R package version 0.4.3},
 }
 ```
