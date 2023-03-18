@@ -36,6 +36,18 @@ calcBiomassByLandType <- function(subtype) {
   # the given type and thereby make the computed data unrealiable
   out$x[round(out$weight, 6) == 0] <- 0
 
+  xRaster <- magclass::as.SpatRaster(out$x)
+
+  # add country again, because as.SpatRaster does not preserves that at the moment
+  countryVector <- calcOutput("WorldCountries", aggregate = FALSE)
+  countryRaster <- terra::rasterize(countryVector, xRaster, "ISO", touches = TRUE)
+  xRaster <- c(xRaster, countryRaster)
+
+  xRaster <- toolAddEcoregions(xRaster)
+  xRaster$BiomeCountry <- paste0(xRaster$ECO_BIOME_, "_", xRaster$ISO)
+
+  out$x <- magclass::as.magpie(xRaster)
+
   return(list(x = out$x,
               weight = out$weight,
               description = paste("Average", name, "biomass content by land type"),

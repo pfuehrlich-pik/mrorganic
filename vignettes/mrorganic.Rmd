@@ -32,18 +32,39 @@ archive which includes all data sets. For `mrorganic` some plots are also includ
 ```{r, echo = TRUE, eval = FALSE}
 # enable R to discover and download R packages from PIK
 library(mrorganic)
-path <- retrieveData("organic")
+path <- retrieveData("organic", rev = 2)
 message(path, " created.")
 ```
-All data will be on ISO country resolution. To instead aggregate to GTAP11 regions run:
+All data will be on ISO country resolution. To instead aggregate to GTAP11 regions:
 ```{r, echo = TRUE, eval = FALSE}
 # enable R to discover and download R packages from PIK
-retrieveData("organic", regionmapping = "regionmappingGTAP11.csv")
+retrieveData("organic", rev = 2, regionmapping = "regionmappingGTAP11.csv")
 ```
 
 # SOC Data
+To get SOC data including land type data as weights:
 ```{r, echo = TRUE, eval = TRUE}
 library(mrorganic)
-soc <- calcOutput("SOCbyLandType", aggregate = FALSE)
-plotMap(soc, name = "SOC")
+soc <- calcOutput("SOCbyLandType", aggregate = FALSE, supplementary = TRUE)
+plotMap(soc$x, name = "SOC")
+```
+We set `aggregate = FALSE` here, because by default `calcOutput` would aggregate to
+the regions currently defined by `getConfig("regionmapping")`, but we want gridded data.
+With `supplementary = TRUE` we get metadata in addition to the SOC data. In this case
+we care about the land type data which we want to plot next:
+```{r, echo = TRUE, eval = TRUE}
+landShares <- round(soc$weight, 8) / dimSums(soc$weight, dim = 3) # calculate shares
+getComment(landShares) <- "unit: 1"
+plotMap(landShares, name = "land cover share")
+```
+
+# Biomass Data
+The biomass dataset has multiple subtypes that can be selected like this:
+```{r, echo = TRUE, eval = TRUE}
+library(mrorganic)
+biomassAbove <- calcOutput("BiomassbyLandType", subtype = "aboveground")
+plotMap(biomassAbove, name = "biomass_aboveground")
+
+biomassBelow <- calcOutput("BiomassbyLandType", subtype = "belowground")
+plotMap(biomassBelow, name = "biomass_belowground")
 ```
