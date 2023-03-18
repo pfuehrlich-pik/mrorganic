@@ -7,17 +7,19 @@ Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Pascal", "Führlich", , "pascal.fuehrlich@pik-potsdam.de", role = "aut")
   )
-Description: mrorganic greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
+Description: mrorganic greatly simplifies downloading and preparing SOC
+    and biomass data for further scientific work.
 License: LGPL-3 | file LICENSE
+URL: https://github.com/tscheypidi/mrorganic
 Depends:
     madrat(>= 3.0),
     magclass(>= 3.17),
     R(>= 2.10.0)
 Imports:
     geodata,
-    grDevices,
     terra,
-    utils
+    utils,
+    withr
 Suggests:
     covr,
     knitr,

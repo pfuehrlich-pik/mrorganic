@@ -4,9 +4,9 @@
 \name{mrorganic-package}
 \alias{mrorganic}
 \alias{mrorganic-package}
-\title{mrorganic: madrat based MAgPIE Input Data Library}
+\title{mrorganic: Provide SOC and biomass data}
 \description{
-Provides functions for MAgPIE country and cellular input data generation.
+mrorganic greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
 }
 \author{
 \strong{Maintainer}: Jan Philipp Dietrich \email{dietrich@pik-potsdam.de}

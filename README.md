@@ -1,4 +1,4 @@
-# madrat based MAgPIE Input Data Library
+# Provide SOC and biomass data
 
 R package **mrorganic**, version **0.4.4**
 
@@ -6,8 +6,7 @@ R package **mrorganic**, version **0.4.4**
 
 ## Purpose and Functionality
 
-Provides functions for MAgPIE country and cellular input data
-    generation.
+mrorganic greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
 
 
 ## Installation
@@ -31,6 +30,14 @@ Package updates can be installed using `update.packages` (make sure that the add
 update.packages()
 ```
 
+## Tutorial
+
+The package comes with a vignette describing the basic functionality of the package and how to use it. You can load it with the following command (the package needs to be installed):
+
+```r
+vignette("mrorganic") # Generating SOC and biomass data with mrorganic
+```
+
 ## Questions / Problems
 
 In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pik-potsdam.de>.
@@ -39,13 +46,13 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrorganic** in publications use:
 
-Dietrich J, Führlich P (2023). _mrorganic: madrat based MAgPIE Input Data Library_. R package version 0.4.4.
+Dietrich J, Führlich P (2023). _mrorganic: Provide SOC and biomass data_. R package version 0.4.4.
 
 A BibTeX entry for LaTeX users is
 
  ```latex
 @Manual{,
-  title = {mrorganic: madrat based MAgPIE Input Data Library},
+  title = {mrorganic: Provide SOC and biomass data},
   author = {Jan Philipp Dietrich and Pascal Führlich},
   year = {2023},
   note = {R package version 0.4.4},
