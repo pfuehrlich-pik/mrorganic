@@ -1,6 +1,6 @@
 {
   "title": "mrorganic: madrat based MAgPIE Input Data Library",
-  "version": "0.4.5",
+  "version": "0.4.6",
   "description": "<p>Provides functions for MAgPIE country and cellular input data\n    generation.<\/p>",
   "creators": [
     {
