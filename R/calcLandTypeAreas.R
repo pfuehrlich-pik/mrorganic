@@ -17,7 +17,7 @@
 calcLandTypeAreas <- function(categories = "CropGrassOther") {
 
   if (categories == "CropGrassOther") {
-    m  <- list(map = rbind(c(10, 1), c(20, 1), c(30, 1), c(130, 2)),
+    m  <- list(map = rbind(c(10, 1), c(11, 1), c(12, 1), c(20, 1), c(30, 1), c(40, 1), c(130, 2)),
                names = c("cropland", "grassland", "other"))
   } else if (categories == "CropGrassForestOthervegResidual") {
     m  <- list(map = rbind(c(10, 1), c(11, 1), c(12, 1), c(20, 1), c(30, 1), c(40, 1),
