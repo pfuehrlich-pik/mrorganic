@@ -1,6 +1,6 @@
 #' Calculate Biomass by land type
 #'
-#' Estimate soil organic carbon content split by land type
+#' Estimate soil organic carbon content split by land type.
 #'
 #' @param subtype "aboveground" or "belowground"
 #' @return data
@@ -19,9 +19,10 @@ calcBiomassByLandType <- function(subtype) {
   subtype <- toolSubtypeSelect(subtype, c(aboveground = "abovegroundBiomass",
                                           belowground = "belowgroundBiomass"))
 
-  terra::terraOptions(tempdir = getConfig("tmpfolder"))
+  terra::terraOptions(tempdir = withr::local_tempdir(tmpdir = getConfig("tmpfolder")), todisk = TRUE, memfrac = 0.5)
+  withr::defer(terra::terraOptions(tempdir = tempdir()))
 
-  message("Please be patient, this will take now a while.")
+  message("Please be patient, this will take a while.")
 
   # read in biomass data
   biomass <- readSource("Spawn", subtype = subtype, convert = FALSE)
