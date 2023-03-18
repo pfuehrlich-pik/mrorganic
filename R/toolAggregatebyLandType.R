@@ -21,12 +21,12 @@ toolAggregateByLandType <- function(x, weight) {
 
   # aggregate weight to intermediate target resolution
   # (for further processing to happen in memory)
-  res <- round(terra::res(x)[1], 9)
-  weight25 <- terra::aggregate(weight, fact = 0.25 / res, fun = "sum", na.rm = TRUE)
+  res <- terra::res(x)[1]
+  weight25 <- terra::aggregate(weight, fact = round(0.25 / res), fun = "sum", na.rm = TRUE)
   message("Land use aggregation to 0.25deg completed. (2/4)")
 
   # area weighted aggregation of x to 0.25 degree
-  x25 <- terra::aggregate(x * weight, fact = 0.25 / res, fun = "sum", na.rm = TRUE) / weight25
+  x25 <- terra::aggregate(x * weight, fact = round(0.25 / res), fun = "sum", na.rm = TRUE) / weight25
   names(x25) <- names(weight25)
   message("Area weighted data aggregation to 0.25deg completed. (3/4)")
 
