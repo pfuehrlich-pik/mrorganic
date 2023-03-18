@@ -1,0 +1,19 @@
+---
+title: "Generating SOC and biomass data with mrorganic"
+author: "Pascal Führlich"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Generating SOC and biomass data with mrorganic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+madrat is a framework that can help structuring data preparation in R. It splits the data preparation into separate steps with each having distinctive requirements about the returned data. The following tutorial will describe the first steps with the package together with the specific requirements for each calculation step.
+
+
+## Setup
