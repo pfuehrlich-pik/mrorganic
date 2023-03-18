@@ -34,8 +34,8 @@ calcLandTypeAreas <- function(categories = "CropGrassOther") {
   terra::terraOptions(tempdir = getConfig("tmpfolder"))
   land <- readSource("ESACCI", subtype = "landcover2010", convert = FALSE)
   message("Please be patient, this will take now a while.")
-  cropGrassOther <- terra::classify(land, m$map, others = 3)
-  out <- terra::segregate(cropGrassOther) * terra::cellSize(land, unit = "ha")
+  landSplit <- terra::classify(land, m$map, others = (max(m$map[, 2]) + 1))
+  out <- terra::segregate(landSplit) * terra::cellSize(land, unit = "ha")
   names(out) <- m$names
   return(list(x = out,
               description = "Estimated area for cropland, grassland and other types based on ESACCI data.",
