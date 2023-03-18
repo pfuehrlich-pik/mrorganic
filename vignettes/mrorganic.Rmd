@@ -13,7 +13,37 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-madrat is a framework that can help structuring data preparation in R. It splits the data preparation into separate steps with each having distinctive requirements about the returned data. The following tutorial will describe the first steps with the package together with the specific requirements for each calculation step.
+`mrorganic` greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
+The prefix "mr" of `mrorganic` indicates that it is a `madrat`-based data package.
+`madrat` is a package and a framework that structures and supports data preparation
+with various tools e.g. aggregation or caching.
 
 
-## Setup
+# Installation
+```{r, echo = TRUE, eval = FALSE}
+# enable R to discover and download R packages from PIK
+options(repos = c(CRAN = "@CRAN@", pik = "https://rse.pik-potsdam.de/r/packages"))
+install.packages("mrorganic")
+```
+
+# Data Package
+Like most `madrat`-based packages, `mrorganic` includes a function that runs all preparation steps and creates a tgz
+archive which includes all data sets. For `mrorganic` some plots are also included. Run it like this:
+```{r, echo = TRUE, eval = FALSE}
+# enable R to discover and download R packages from PIK
+library(mrorganic)
+path <- retrieveData("organic")
+message(path, " created.")
+```
+All data will be on ISO country resolution. To instead aggregate to GTAP11 regions run:
+```{r, echo = TRUE, eval = FALSE}
+# enable R to discover and download R packages from PIK
+retrieveData("organic", regionmapping = "regionmappingGTAP11.csv")
+```
+
+# SOC Data
+```{r, echo = TRUE, eval = TRUE}
+library(mrorganic)
+soc <- calcOutput("SOCbyLandType", aggregate = FALSE)
+plotMap(soc, name = "SOC")
+```
