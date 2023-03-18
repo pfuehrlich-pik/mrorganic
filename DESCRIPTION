@@ -1,14 +1,13 @@
 Type: Package
 Package: mrorganic
-Title: madrat based MAgPIE Input Data Library
+Title: Provide SOC and biomass data
 Version: 0.4.4
 Date: 2023-03-18
 Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Pascal", "Führlich", , "pascal.fuehrlich@pik-potsdam.de", role = "aut")
   )
-Description: Provides functions for MAgPIE country and cellular input data
-    generation.
+Description: mrorganic greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
 License: LGPL-3 | file LICENSE
 Depends:
     madrat(>= 3.0),
