@@ -4,9 +4,16 @@
 \name{mrorganic-package}
 \alias{mrorganic}
 \alias{mrorganic-package}
-\title{mrorganic: Provide SOC and biomass data}
+\title{mrorganic: Provide soil organic carbon and biomass data}
 \description{
-mrorganic greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
+mrorganic supports downloading and preparing soil organic carbon and biomass data for further scientific work.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/tscheypidi/mrorganic}
+}
+
 }
 \author{
 \strong{Maintainer}: Jan Philipp Dietrich \email{dietrich@pik-potsdam.de}

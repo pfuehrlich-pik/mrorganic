@@ -1,7 +1,7 @@
 {
-  "title": "mrorganic: Provide SOC and biomass data",
-  "version": "0.4.4",
-  "description": "<p>mrorganic greatly simplifies downloading and preparing SOC and biomass data for further scientific work.<\/p>",
+  "title": "mrorganic: Provide soil organic carbon and biomass data",
+  "version": "0.4.7",
+  "description": "<p>mrorganic supports downloading and preparing soil organic carbon\n    and biomass data for further scientific work.<\/p>",
   "creators": [
     {
       "name": "Dietrich, Jan Philipp"

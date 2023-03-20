@@ -1,13 +1,13 @@
 Type: Package
 Package: mrorganic
-Title: Provide SOC and biomass data
-Version: 0.4.4
-Date: 2023-03-18
+Title: Provide soil organic carbon and biomass data
+Version: 0.4.7
+Date: 2023-03-20
 Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Pascal", "Führlich", , "pascal.fuehrlich@pik-potsdam.de", role = "aut")
   )
-Description: mrorganic greatly simplifies downloading and preparing SOC
+Description: mrorganic supports downloading and preparing soil organic carbon
     and biomass data for further scientific work.
 License: LGPL-3 | file LICENSE
 URL: https://github.com/tscheypidi/mrorganic

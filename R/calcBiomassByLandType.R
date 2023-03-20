@@ -26,7 +26,7 @@ calcBiomassByLandType <- function(subtype) {
 
   # read in biomass data
   biomass <- readSource("Spawn", subtype = subtype, convert = FALSE)
-  weight  <- calcOutput("LandTypeAreas", categories = "CropGrassForestOthervegResidual", aggregate = FALSE) + 10^-10
+  weight  <- calcOutput("LandTypeAreas", categories = "CropGrassForestOthernatvegResidual", aggregate = FALSE) + 10^-10
   message("Relevant data read in.")
 
   out <- toolAggregateByLandType(biomass, weight)
@@ -54,6 +54,6 @@ calcBiomassByLandType <- function(subtype) {
               unit = "Mg C ha-1",
               min = 0,
               structure.spatial = "-?[0-9]*p[0-9]*\\.-?[0-9]*p[0-9]*\\.[A-Z]{3}",
-              structure.data = "(cropland|grassland|other)",
+              structure.data = "(cropland|grassland|forest|othernatveg|residual)",
               isocountries = FALSE))
 }

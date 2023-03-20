@@ -1,12 +1,13 @@
-# Provide SOC and biomass data
+# Provide soil organic carbon and biomass data
 
-R package **mrorganic**, version **0.4.4**
+R package **mrorganic**, version **0.4.7**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrorganic)](https://cran.r-project.org/package=mrorganic)  [![R build status](https://github.com/tscheypidi/mrorganic/workflows/check/badge.svg)](https://github.com/tscheypidi/mrorganic/actions) [![codecov](https://codecov.io/gh/tscheypidi/mrorganic/branch/master/graph/badge.svg)](https://app.codecov.io/gh/tscheypidi/mrorganic) [![r-universe](https://pik-piam.r-universe.dev/badges/mrorganic)](https://pik-piam.r-universe.dev/builds)
 
 ## Purpose and Functionality
 
-mrorganic greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
+mrorganic supports downloading and preparing soil organic carbon
+    and biomass data for further scientific work.
 
 
 ## Installation
@@ -46,15 +47,16 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrorganic** in publications use:
 
-Dietrich J, Führlich P (2023). _mrorganic: Provide SOC and biomass data_. R package version 0.4.4.
+Dietrich J, Führlich P (2023). _mrorganic: Provide soil organic carbon and biomass data_. R package version 0.4.7, <https://github.com/tscheypidi/mrorganic>.
 
 A BibTeX entry for LaTeX users is
 
  ```latex
 @Manual{,
-  title = {mrorganic: Provide SOC and biomass data},
+  title = {mrorganic: Provide soil organic carbon and biomass data},
   author = {Jan Philipp Dietrich and Pascal Führlich},
   year = {2023},
-  note = {R package version 0.4.4},
+  note = {R package version 0.4.7},
+  url = {https://github.com/tscheypidi/mrorganic},
 }
 ```
