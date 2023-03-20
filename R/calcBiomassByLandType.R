@@ -33,7 +33,7 @@ calcBiomassByLandType <- function(subtype) {
 
   # set values to 0 for cells with negligible weight
   # doing so removes values for cells with missing land area for the
-  # the given type and thereby make the computed data unrealiable
+  # the given type and thereby make the computed data unreliable
   out$x[round(out$weight, 6) == 0] <- 0
 
   xRaster <- magclass::as.SpatRaster(out$x)
@@ -44,6 +44,7 @@ calcBiomassByLandType <- function(subtype) {
   xRaster <- c(xRaster, countryRaster)
 
   xRaster <- toolAddEcoregions(xRaster)
+
   xRaster$BiomeCountry <- paste0(xRaster$ECO_BIOME_, "_", xRaster$ISO)
 
   out$x <- magclass::as.magpie(xRaster)

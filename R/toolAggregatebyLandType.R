@@ -63,7 +63,8 @@ toolAggregateByLandType <- function(x, weight) {
       }
       tmp <- x[seq_along(missing), , ]
       tmp[, , ] <- missingValue
-      getItems(tmp, dim = 1, raw = TRUE) <- paste0("-70p125.25p125.", missing)
+      fakeX <- sub(".","p",as.character(69.625+0.25*seq_along(missing)), fixed=TRUE)
+      getItems(tmp, dim = 1, raw = TRUE) <- paste0("-",fakeX,".25p125.", missing)
       x <- mbind(x, tmp)
     }
     return(x)
