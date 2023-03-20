@@ -30,13 +30,13 @@ downloadSpawn <- function() {
               release_date = "2020-04-22",
               license      = "https://www.earthdata.nasa.gov/learn/use-data/data-use-policy",
               reference    = utils::bibentry("Misc",
-                                      title = paste("Global Aboveground and Belowground Biomass Carbon",
-                                                    "Density Maps for the Year 2010"),
-                                      author = c(utils::person("S.A.", "Spawn"),
-                                                 utils::person("H.K.", "Gibbs")),
-                                      year = "2020",
-                                      publisher = "ORNL Distributed Active Archive Center",
-                                      language = "en",
-                                      url = "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1763",
-                                      doi = "10.3334/ORNLDAAC/1763")))
+                                             title = paste("Global Aboveground and Belowground Biomass Carbon",
+                                                           "Density Maps for the Year 2010"),
+                                             author = c(utils::person("S.A.", "Spawn"),
+                                                        utils::person("H.K.", "Gibbs")),
+                                             year = "2020",
+                                             publisher = "ORNL Distributed Active Archive Center",
+                                             language = "en",
+                                             url = "https://daac.ornl.gov/cgi-bin/dsviewer.pl?ds_id=1763",
+                                             doi = "10.3334/ORNLDAAC/1763")))
 }

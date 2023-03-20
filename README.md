@@ -1,13 +1,13 @@
-# madrat based MAgPIE Input Data Library
+# Provide soil organic carbon and biomass data
 
-R package **mrorganic**, version **0.4.6**
+R package **mrorganic**, version **0.4.7**
 
 [![CRAN status](https://www.r-pkg.org/badges/version/mrorganic)](https://cran.r-project.org/package=mrorganic)  [![R build status](https://github.com/tscheypidi/mrorganic/workflows/check/badge.svg)](https://github.com/tscheypidi/mrorganic/actions) [![codecov](https://codecov.io/gh/tscheypidi/mrorganic/branch/master/graph/badge.svg)](https://app.codecov.io/gh/tscheypidi/mrorganic) [![r-universe](https://pik-piam.r-universe.dev/badges/mrorganic)](https://pik-piam.r-universe.dev/builds)
 
 ## Purpose and Functionality
 
-Provides functions for MAgPIE country and cellular input data
-    generation.
+mrorganic supports downloading and preparing soil organic carbon
+    and biomass data for further scientific work.
 
 
 ## Installation
@@ -31,6 +31,14 @@ Package updates can be installed using `update.packages` (make sure that the add
 update.packages()
 ```
 
+## Tutorial
+
+The package comes with a vignette describing the basic functionality of the package and how to use it. You can load it with the following command (the package needs to be installed):
+
+```r
+vignette("mrorganic") # Generating SOC and biomass data with mrorganic
+```
+
 ## Questions / Problems
 
 In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pik-potsdam.de>.
@@ -39,15 +47,16 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrorganic** in publications use:
 
-Dietrich J, Führlich P (2023). _mrorganic: madrat based MAgPIE Input Data Library_. R package version 0.4.6.
+Dietrich J, Führlich P (2023). _mrorganic: Provide soil organic carbon and biomass data_. R package version 0.4.7, <https://github.com/tscheypidi/mrorganic>.
 
 A BibTeX entry for LaTeX users is
 
  ```latex
 @Manual{,
-  title = {mrorganic: madrat based MAgPIE Input Data Library},
+  title = {mrorganic: Provide soil organic carbon and biomass data},
   author = {Jan Philipp Dietrich and Pascal Führlich},
   year = {2023},
-  note = {R package version 0.4.6},
+  note = {R package version 0.4.7},
+  url = {https://github.com/tscheypidi/mrorganic},
 }
 ```

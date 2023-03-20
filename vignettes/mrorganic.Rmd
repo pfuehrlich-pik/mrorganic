@@ -1,0 +1,70 @@
+---
+title: "Generating SOC and biomass data with mrorganic"
+author: "Pascal Führlich"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Generating SOC and biomass data with mrorganic}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
+
+`mrorganic` greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
+The prefix "mr" of `mrorganic` indicates that it is a `madrat`-based data package.
+`madrat` is a package and a framework that structures and supports data preparation
+with various tools e.g. aggregation or caching.
+
+
+# Installation
+```{r, echo = TRUE, eval = FALSE}
+# enable R to discover and download R packages from PIK
+options(repos = c(CRAN = "@CRAN@", pik = "https://rse.pik-potsdam.de/r/packages"))
+install.packages("mrorganic")
+```
+
+# Data Package
+Like most `madrat`-based packages, `mrorganic` includes a function that runs all preparation steps and creates a tgz
+archive which includes all data sets. For `mrorganic` some plots are also included. Run it like this:
+```{r, echo = TRUE, eval = FALSE}
+# enable R to discover and download R packages from PIK
+library(mrorganic)
+path <- retrieveData("organic", rev = 2)
+message(path, " created.")
+```
+All data will be on ISO country resolution. To instead aggregate to GTAP11 regions:
+```{r, echo = TRUE, eval = FALSE}
+# enable R to discover and download R packages from PIK
+retrieveData("organic", rev = 2, regionmapping = "regionmappingGTAP11.csv")
+```
+
+# SOC Data
+To get SOC data including land type data as weights:
+```{r, echo = TRUE, eval = FALSE}
+library(mrorganic)
+soc <- calcOutput("SOCbyLandType", aggregate = FALSE, supplementary = TRUE)
+plotMap(soc$x, name = "SOC")
+```
+We set `aggregate = FALSE` here, because by default `calcOutput` would aggregate to
+the regions currently defined by `getConfig("regionmapping")`, but we want gridded data.
+With `supplementary = TRUE` we get metadata in addition to the SOC data. In this case
+we care about the land type data which we want to plot next:
+```{r, echo = TRUE, eval = FALSE}
+landShares <- round(soc$weight, 8) / dimSums(soc$weight, dim = 3) # calculate shares
+getComment(landShares) <- "unit: 1"
+plotMap(landShares, name = "land cover share")
+```
+
+# Biomass Data
+The biomass dataset has multiple subtypes that can be selected like this:
+```{r, echo = TRUE, eval = FALSE}
+library(mrorganic)
+biomassAbove <- calcOutput("BiomassbyLandType", subtype = "aboveground")
+plotMap(biomassAbove, name = "biomass_aboveground")
+
+biomassBelow <- calcOutput("BiomassbyLandType", subtype = "belowground")
+plotMap(biomassBelow, name = "biomass_belowground")
+```

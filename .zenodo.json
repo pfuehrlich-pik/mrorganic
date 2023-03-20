@@ -1,7 +1,7 @@
 {
-  "title": "mrorganic: madrat based MAgPIE Input Data Library",
-  "version": "0.4.6",
-  "description": "<p>Provides functions for MAgPIE country and cellular input data\n    generation.<\/p>",
+  "title": "mrorganic: Provide soil organic carbon and biomass data",
+  "version": "0.4.7",
+  "description": "<p>mrorganic supports downloading and preparing soil organic carbon\n    and biomass data for further scientific work.<\/p>",
   "creators": [
     {
       "name": "Dietrich, Jan Philipp"

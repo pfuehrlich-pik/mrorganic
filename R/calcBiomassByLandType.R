@@ -1,6 +1,6 @@
 #' Calculate Biomass by land type
 #'
-#' Estimate soil organic carbon content split by land type
+#' Estimate soil organic carbon content split by land type.
 #'
 #' @param subtype "aboveground" or "belowground"
 #' @return data
@@ -19,9 +19,10 @@ calcBiomassByLandType <- function(subtype) {
   subtype <- toolSubtypeSelect(subtype, c(aboveground = "abovegroundBiomass",
                                           belowground = "belowgroundBiomass"))
 
-  terra::terraOptions(tempdir = getConfig("tmpfolder"))
+  terra::terraOptions(tempdir = withr::local_tempdir(tmpdir = getConfig("tmpfolder")), todisk = TRUE, memfrac = 0.5)
+  withr::defer(terra::terraOptions(tempdir = tempdir()))
 
-  message("Please be patient, this will take now a while.")
+  message("Please be patient, this will take a while.")
 
   # read in biomass data
   biomass <- readSource("Spawn", subtype = subtype, convert = FALSE)
@@ -34,6 +35,18 @@ calcBiomassByLandType <- function(subtype) {
   # doing so removes values for cells with missing land area for the
   # the given type and thereby make the computed data unrealiable
   out$x[round(out$weight, 6) == 0] <- 0
+
+  xRaster <- magclass::as.SpatRaster(out$x)
+
+  # add country again, because as.SpatRaster does not preserves that at the moment
+  countryVector <- calcOutput("WorldCountries", aggregate = FALSE)
+  countryRaster <- terra::rasterize(countryVector, xRaster, "ISO", touches = TRUE)
+  xRaster <- c(xRaster, countryRaster)
+
+  xRaster <- toolAddEcoregions(xRaster)
+  xRaster$BiomeCountry <- paste0(xRaster$ECO_BIOME_, "_", xRaster$ISO)
+
+  out$x <- magclass::as.magpie(xRaster)
 
   return(list(x = out$x,
               weight = out$weight,

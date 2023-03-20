@@ -4,9 +4,16 @@
 \name{mrorganic-package}
 \alias{mrorganic}
 \alias{mrorganic-package}
-\title{mrorganic: madrat based MAgPIE Input Data Library}
+\title{mrorganic: Provide soil organic carbon and biomass data}
 \description{
-Provides functions for MAgPIE country and cellular input data generation.
+mrorganic supports downloading and preparing soil organic carbon and biomass data for further scientific work.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/tscheypidi/mrorganic}
+}
+
 }
 \author{
 \strong{Maintainer}: Jan Philipp Dietrich \email{dietrich@pik-potsdam.de}
