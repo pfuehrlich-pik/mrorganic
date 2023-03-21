@@ -9,7 +9,7 @@ downloadEcoregions2017 <- function() {
               title        = "Ecoregions 2017",
               description  = "A shapefile containing global ecoregions data, e.g. biomes.",
               author       = "Resolve",
-              unit         = "1",
+              unit         = "categorical",
               version      = NA,
               release_date = "2017-04-05",
               license      = "CC-BY 4.0",

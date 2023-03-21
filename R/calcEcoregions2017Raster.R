@@ -17,6 +17,6 @@ calcEcoregions2017Raster <- function(ecoregionsColumn = "ECO_BIOME_", nrows = 72
   return(list(x = magclass::as.magpie(x),
               description = paste0("A ", nrows, "x", ncols, " raster with ",
                                    ecoregionsColumn, " data from Ecoregions 2017."),
-              unit = NA,
+              unit = "categorical",
               isocountries = FALSE))
 }
