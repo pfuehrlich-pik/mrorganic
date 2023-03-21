@@ -39,7 +39,7 @@ fullORGANIC <- function(rev) {
   getComment(landShares) <- "unit: 1"
   plotMap(landShares, name = "land cover share", createPng = TRUE)
 
-  biomeRaster <- calcOutput("Ecoregions2017Raster", ecoregionsColumn = "ECO_BIOME_")
+  biomeRaster <- calcOutput("Ecoregions2017Raster", ecoregionsColumn = "ECO_BIOME_", aggregate = FALSE)
 
   for (i in c("aboveground", "belowground")) {
     calcOutput("BiomassByLandType", subtype = i,

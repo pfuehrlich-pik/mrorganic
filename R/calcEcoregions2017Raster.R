@@ -2,10 +2,10 @@
 #'
 #' Produces a raster with ecoregion information as a magclass object.
 #'
-#' @param ecoregionsColumns Which columns of the ecoregions dataset should be in the raster.
+#' @param ecoregionsColumn Which column of the ecoregions dataset should be in the raster.
 #' @param nrows Number of rows in the raster produced.
 #' @param ncols Number of columns in the raster produced.
-#' @return A raster with ecoregion information (ecoregionsColumns) as a magclass object
+#' @return A raster with ecoregion information (ecoregionsColumn) as a magclass object
 #'
 #' @author Pascal Führlich
 calcEcoregions2017Raster <- function(ecoregionsColumn = "ECO_BIOME_", nrows = 720, ncols = 1440) {
