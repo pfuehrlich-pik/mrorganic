@@ -64,9 +64,8 @@ fullORGANIC <- function(rev) {
                  all.x = TRUE)
 
       # add region column
-      # TODO how do we know structure of regionmapping dataframe?
-      regionmapping <- madrat::toolGetMapping(madrat::getConfig("regionmapping"))[2:3]
-      names(regionmapping) <- c("country", "region")
+      # TODO how do we know structure of regionmapping dataframe? this works for regionmappingGTAP11.csv, but not h12
+      regionmapping <- madrat::toolGetMapping(madrat::getConfig("regionmapping"))
       b <- merge(b, regionmapping, by = "country", all.x = TRUE)
 
       # add combination dimensions for aggregation

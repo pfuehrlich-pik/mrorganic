@@ -4,24 +4,18 @@
 \alias{calcEcoregions2017Raster}
 \title{calcEcoregions2017Raster}
 \usage{
-calcEcoregions2017Raster(
-  ecoregionsColumn = "ECO_BIOME_",
-  nrows = 720,
-  ncols = 1440
-)
+calcEcoregions2017Raster(nrows = 720, ncols = 1440)
 }
 \arguments{
-\item{ecoregionsColumn}{Which column of the ecoregions dataset should be in the raster.}
-
 \item{nrows}{Number of rows in the raster produced.}
 
 \item{ncols}{Number of columns in the raster produced.}
 }
 \value{
-A raster with ecoregion information (ecoregionsColumn) as a magclass object
+A raster with ecoregion information as a data.frame
 }
 \description{
-Produces a raster with ecoregion information as a magclass object.
+Produces a raster with ecoregion information.
 }
 \author{
 Pascal Führlich
