@@ -49,7 +49,6 @@ fullORGANIC <- function(rev) {
                file = paste0(i, "_biomass_country.cs2"), round = 2)
     biomass <- calcOutput("BiomassByLandType", subtype = i, aggregate = FALSE, supplementary = TRUE)
 
-    biomass=readRDS('~/PIK/inputdata/cache/default/calcBiomassByLandType-F7a1e0fde-979d9fd9.rds')
     biomassWeight <- biomass$weight
     biomass <- biomass$x
     write.magpie(biomass, paste0(i, ".nc"))
