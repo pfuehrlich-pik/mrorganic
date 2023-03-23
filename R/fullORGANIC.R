@@ -18,7 +18,8 @@
 #'
 fullORGANIC <- function(rev) {
 
-  terra::terraOptions(tempdir = getConfig("tmpfolder"))
+  # TODO use setTerraOptions everywhere (which will invalidate cache)
+  madrat::setTerraOptions()
 
   if (rev != 2) stop("rev has to be set to 2! Other data revisions are currently not available!")
 
