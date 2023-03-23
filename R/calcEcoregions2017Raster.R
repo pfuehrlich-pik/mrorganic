@@ -14,9 +14,6 @@ calcEcoregions2017Raster <- function(nrows = 720, ncols = 1440) {
   x <- merge(terra::as.data.frame(ecoregionsRaster, xy = TRUE),
              terra::as.data.frame(ecoregions), by = "OBJECTID")
 
-  # TODO the following check fails
-  # stopifnot(setequal(x$OBJECTID, c(ecoregions$OBJECTID, NA)))
-
   return(list(x = x,
               description = paste0("A ", nrows, "x", ncols, " raster with data from Ecoregions 2017."),
               unit = "categorical",
