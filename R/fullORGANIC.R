@@ -55,35 +55,34 @@ fullORGANIC <- function(rev) {
     write.magpie(round(biomass, 2), paste0(i, ".cs5"))
     plotMap(biomass, name = paste0("biomass_", i), createPng = TRUE)
 
-    addEcoregions <- function(b) {
+    addEcoregions <- function(x) {
       # apply mapping from coordinates to ecoregions
-      b <- merge(x = magclass::as.data.frame(b, rev = 3),
+      x <- merge(x = magclass::as.data.frame(x, rev = 3),
                  y = ecoregions,
                  by = c("x", "y"),
                  all.x = TRUE)
 
       # add region column
-      madrat::setConfig(regionmapping="regionmappingGTAP11.csv")
       regionmapping <- madrat::toolGetMapping(madrat::getConfig("regionmapping"), type = "regional")
       stopifnot(ncol(regionmapping) %in% 2:3)
       if (ncol(regionmapping) == 3) {
         regionmapping <- regionmapping[, 2:3]
       }
       colnames(regionmapping) <- c("country", "region")
-      b <- merge(b, regionmapping, by = "country", all.x = TRUE)
+      x <- merge(x, regionmapping, by = "country", all.x = TRUE)
 
       # add combination dimensions for aggregation
-      b$country_ECO_BIOME_ <- paste(b$country, b$ECO_BIOME_, sep = "_")
-      b$region_ECO_BIOME_ <- paste(b$region, b$ECO_BIOME_, sep = "_")
+      x$country_ECO_BIOME_ <- paste0(x$country, "_", x$ECO_BIOME_)
+      x$region_ECO_BIOME_ <- paste0(x$region, "_", x$ECO_BIOME_)
 
-      b <- b[, c("x", "y", "country", "region", "ECO_BIOME_",
+      x <- x[, c("x", "y", "country", "region", "ECO_BIOME_",
                  "country_ECO_BIOME_", "region_ECO_BIOME_",
                  "data", ".value")]
-      b$x <- sub("\\.", "p", b$x)
-      b$y <- sub("\\.", "p", b$y)
-      b <- magclass::as.magpie(b, tidy = TRUE, temporal = 0,
-                               spatial = setdiff(colnames(b), c("data", ".value")))
-      return(b)
+      x$x <- sub("\\.", "p", x$x)
+      x$y <- sub("\\.", "p", x$y)
+      x <- magclass::as.magpie(x, tidy = TRUE, temporal = 0,
+                               spatial = setdiff(colnames(x), c("data", ".value")))
+      return(x)
     }
 
     biomass <- addEcoregions(biomass)
