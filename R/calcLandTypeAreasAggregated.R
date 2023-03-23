@@ -15,7 +15,7 @@
 #' @seealso \code{\link{calcOutput}}
 
 calcLandTypeAreasAggregated <- function(res, zeroValue = 0) {
-  terra::terraOptions(tempdir = getConfig("tmpfolder"))
+  madrat::setTerraOptions()
   message("Please be patient, this will take now a while.")
 
   # read in area information

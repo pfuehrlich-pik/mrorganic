@@ -13,7 +13,7 @@
 
 calcSOCbyLandType <- function() {
 
-  terra::terraOptions(tempdir = getConfig("tmpfolder"))
+  madrat::setTerraOptions()
 
   message("Please be patient, this will take now a while.")
 

@@ -12,7 +12,7 @@
 
 toolAggregateByLandType <- function(x, weight) {
 
-  terra::terraOptions(tempdir = getConfig("tmpfolder"))
+  madrat::setTerraOptions()
 
   # align data sets by projecting x onto weight and masking weight onto x
   x    <- terra::project(x, weight)

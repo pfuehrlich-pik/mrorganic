@@ -12,7 +12,7 @@ Description: mrorganic supports downloading and preparing soil organic carbon
 License: LGPL-3 | file LICENSE
 URL: https://github.com/tscheypidi/mrorganic
 Depends:
-    madrat(>= 3.1.0),
+    madrat(>= 3.1.1),
     magclass(>= 3.17),
     R(>= 2.10.0)
 Imports:

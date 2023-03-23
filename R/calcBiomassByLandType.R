@@ -19,8 +19,7 @@ calcBiomassByLandType <- function(subtype) {
   subtype <- toolSubtypeSelect(subtype, c(aboveground = "abovegroundBiomass",
                                           belowground = "belowgroundBiomass"))
 
-  terra::terraOptions(tempdir = withr::local_tempdir(tmpdir = getConfig("tmpfolder")), todisk = TRUE, memfrac = 0.5)
-  withr::defer(terra::terraOptions(tempdir = tempdir()))
+  madrat::setTerraOptions()
 
   message("Please be patient, this will take a while.")
 
