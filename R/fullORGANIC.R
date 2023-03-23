@@ -63,21 +63,22 @@ fullORGANIC <- function(rev) {
                  all.x = TRUE)
 
       # add region column
-      # TODO how do we know structure of regionmapping dataframe? this works for regionmappingGTAP11.csv, but not h12
-      # regionmapping <- madrat::toolGetMapping(madrat::getConfig("regionmapping"))
-      # regiob <- merge(b, regionmapping, by = "country", all.x = TRUE)
+      madrat::setConfig(regionmapping="regionmappingGTAP11.csv")
+      regionmapping <- madrat::toolGetMapping(madrat::getConfig("regionmapping"), type = "regional")
+      stopifnot(ncol(regionmapping) %in% 2:3)
+      if (ncol(regionmapping) == 3) {
+        regionmapping <- regionmapping[, 2:3]
+      }
+      colnames(regionmapping) <- c("country", "region")
+      b <- merge(b, regionmapping, by = "country", all.x = TRUE)
 
       # add combination dimensions for aggregation
       b$country_ECO_BIOME_ <- paste(b$country, b$ECO_BIOME_, sep = "_")
-      # b$region_ECO_BIOME_ <- paste(b$region, b$ECO_BIOME_, sep = "_")
+      b$region_ECO_BIOME_ <- paste(b$region, b$ECO_BIOME_, sep = "_")
 
-      # b <- b[, c("x", "y", "country", "region", "ECO_BIOME_",
-      #            "country_ECO_BIOME_", "region_ECO_BIOME_",
-      #            "data", ".value")]
-      b <- b[, c("x", "y", "country", "ECO_BIOME_",
-                 "country_ECO_BIOME_",
+      b <- b[, c("x", "y", "country", "region", "ECO_BIOME_",
+                 "country_ECO_BIOME_", "region_ECO_BIOME_",
                  "data", ".value")]
-
       b$x <- sub("\\.", "p", b$x)
       b$y <- sub("\\.", "p", b$y)
       b <- magclass::as.magpie(b, tidy = TRUE, temporal = 0,
@@ -89,8 +90,8 @@ fullORGANIC <- function(rev) {
     biomassWeight <- addEcoregions(biomassWeight)
 
     magclass::write.magpie(toolAggregate(biomass, weight = biomassWeight, to = "country_ECO_BIOME_"),
-                           paste0(i, "_biomass_country_ECO_BIOME_.cs2"))
-    #magclass::write.magpie(toolAggregate(biomass, weight = biomassWeight, to = "region_ECO_BIOME_"),
-    #                       paste0(i, "_biomass_region_ECO_BIOME_.cs2"))
+                           paste0(i, "_biomass_country_ECO_BIOME_.cs5"))
+    magclass::write.magpie(toolAggregate(biomass, weight = biomassWeight, to = "region_ECO_BIOME_"),
+                           paste0(i, "_biomass_region_ECO_BIOME_.cs5"))
   }
 }
