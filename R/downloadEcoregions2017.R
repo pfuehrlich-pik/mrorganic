@@ -15,6 +15,6 @@ downloadEcoregions2017 <- function() {
               license      = "CC-BY 4.0",
               reference    = paste("An Ecoregion-Based Approach to Protecting Half",
                                    "the Terrestrial Realm, BioScience, Volume 67,",
-                                   "Issue 6, June 2017, Pages 534–545,",
+                                   "Issue 6, June 2017, Pages 534-545,",
                                    "https://doi.org/10.1093/biosci/bix014")))
 }
