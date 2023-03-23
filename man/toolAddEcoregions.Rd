@@ -4,21 +4,21 @@
 \alias{toolAddEcoregions}
 \title{toolAddEcoregions}
 \usage{
-toolAddEcoregions(
-  x,
-  ecoregionsColumns = c("ECO_BIOME_", "BIOME_NAME", "REALM")
-)
+toolAddEcoregions(x, ecoregions, regionmapping)
 }
 \arguments{
-\item{x}{A SpatRaster}
+\item{x}{A magclass object}
 
-\item{ecoregionsColumns}{Which columns of the ecoregions dataset should be added.}
+\item{ecoregions}{Ecoregions dataframe, as returned by calcEcoregions2017Raster}
+
+\item{regionmapping}{A regionmapping}
 }
 \value{
-x with additional ecoregion information
+x with additional ecoregion and region information. Spatial subdimensions:
+        c("x", "y", "country", "region", "ECO_BIOME_", "country_ECO_BIOME_", "region_ECO_BIOME_")
 }
 \description{
-Enriches rasterdata with ecoregion information.
+Enriches a magclass object with ecoregion and region information.
 }
 \author{
 Pascal Führlich

@@ -42,55 +42,33 @@ fullORGANIC <- function(rev) {
   ecoregions <- calcOutput("Ecoregions2017Raster", nrows = 720, ncols = 1440, aggregate = FALSE)
   ecoregions <- ecoregions[, c("x", "y", "ECO_BIOME_")]
 
+  regionmapping <- madrat::toolGetMapping(madrat::getConfig("regionmapping"), type = "regional")
+
   for (i in c("aboveground", "belowground")) {
     calcOutput("BiomassByLandType", subtype = i,
                file = paste0(i, "_biomass_region.cs2"), round = 2)
     calcOutput("BiomassByLandType", subtype = i, aggregate = "country",
                file = paste0(i, "_biomass_country.cs2"), round = 2)
+
     biomass <- calcOutput("BiomassByLandType", subtype = i, aggregate = FALSE, supplementary = TRUE)
 
     biomassWeight <- biomass$weight
     biomass <- biomass$x
+
     write.magpie(biomass, paste0(i, ".nc"))
-    write.magpie(round(biomass, 2), paste0(i, ".cs5"))
+
     plotMap(biomass, name = paste0("biomass_", i), createPng = TRUE)
 
-    addEcoregions <- function(x) {
-      # apply mapping from coordinates to ecoregions
-      x <- merge(x = magclass::as.data.frame(x, rev = 3),
-                 y = ecoregions,
-                 by = c("x", "y"),
-                 all.x = TRUE)
+    # add columns "country_ECO_BIOME_" and "region_ECO_BIOME_"
+    biomassWeight <- toolAddEcoregions(biomassWeight, ecoregions, regionmapping)
+    biomass <- toolAddEcoregions(biomass, ecoregions, regionmapping)
 
-      # add region column
-      regionmapping <- madrat::toolGetMapping(madrat::getConfig("regionmapping"), type = "regional")
-      stopifnot(ncol(regionmapping) %in% 2:3)
-      if (ncol(regionmapping) == 3) {
-        regionmapping <- regionmapping[, 2:3]
-      }
-      colnames(regionmapping) <- c("country", "region")
-      x <- merge(x, regionmapping, by = "country", all.x = TRUE)
+    write.magpie(round(biomass, 2), paste0(i, ".cs5"))
 
-      # add combination dimensions for aggregation
-      x$country_ECO_BIOME_ <- paste0(x$country, "_", x$ECO_BIOME_)
-      x$region_ECO_BIOME_ <- paste0(x$region, "_", x$ECO_BIOME_)
+    aggregatedCountryBiome <- toolAggregate(biomass, weight = biomassWeight, to = "country_ECO_BIOME_")
+    magclass::write.magpie(round(aggregatedCountryBiome, 2), paste0(i, "_biomass_country_biome.cs5"))
 
-      x <- x[, c("x", "y", "country", "region", "ECO_BIOME_",
-                 "country_ECO_BIOME_", "region_ECO_BIOME_",
-                 "data", ".value")]
-      x$x <- sub("\\.", "p", x$x)
-      x$y <- sub("\\.", "p", x$y)
-      x <- magclass::as.magpie(x, tidy = TRUE, temporal = 0,
-                               spatial = setdiff(colnames(x), c("data", ".value")))
-      return(x)
-    }
-
-    biomass <- addEcoregions(biomass)
-    biomassWeight <- addEcoregions(biomassWeight)
-
-    magclass::write.magpie(toolAggregate(biomass, weight = biomassWeight, to = "country_ECO_BIOME_"),
-                           paste0(i, "_biomass_country_ECO_BIOME_.cs5"))
-    magclass::write.magpie(toolAggregate(biomass, weight = biomassWeight, to = "region_ECO_BIOME_"),
-                           paste0(i, "_biomass_region_ECO_BIOME_.cs5"))
+    aggregatedRegionBiome <- toolAggregate(biomass, weight = biomassWeight, to = "region_ECO_BIOME_")
+    magclass::write.magpie(round(aggregatedRegionBiome, 2), paste0(i, "_biomass_region_biome.cs5"))
   }
 }
