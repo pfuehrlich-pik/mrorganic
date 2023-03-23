@@ -23,7 +23,8 @@ toolAddEcoregions <- function(x, ecoregions, regionmapping) {
     regionmapping <- regionmapping[, 2:3]
   }
   colnames(regionmapping) <- c("country", "region")
-  x <- merge(x, regionmapping, by = "country", all.x = TRUE)
+
+  x$region <- stats::setNames(regionmapping$region, regionmapping$country)[x$country]
 
   # add combination dimensions for aggregation
   x$country_ECO_BIOME_ <- paste0(x$country, "_", x$ECO_BIOME_)
