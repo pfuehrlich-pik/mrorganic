@@ -1,8 +1,8 @@
 Type: Package
 Package: mrorganic
 Title: Provide soil organic carbon and biomass data
-Version: 0.5.0
-Date: 2023-03-23
+Version: 0.5.1
+Date: 2023-03-24
 Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Pascal", "Führlich", , "pascal.fuehrlich@pik-potsdam.de", role = "aut")

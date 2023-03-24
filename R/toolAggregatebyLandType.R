@@ -12,8 +12,6 @@
 
 toolAggregateByLandType <- function(x, weight) {
 
-  madrat::setTerraOptions()
-
   # align data sets by projecting x onto weight and masking weight onto x
   x    <- terra::project(x, weight)
   weight <- terra::mask(weight, x)

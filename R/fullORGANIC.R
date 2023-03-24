@@ -19,7 +19,7 @@
 fullORGANIC <- function(rev) {
   madrat::setTerraOptions()
 
-  if (rev != 2) stop("rev has to be set to 2! Other data revisions are currently not available!")
+  if (rev < 2) stop("rev has to be set to 2! Other data revisions are currently not available!")
 
   # regional SOC output
   calcOutput("SOCbyLandType", file = "soc_region.cs2", round = 2)

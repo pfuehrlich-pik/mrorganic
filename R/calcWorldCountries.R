@@ -12,7 +12,6 @@
 #' @seealso \code{\link{calcOutput}}
 
 calcWorldCountries <- function() {
-  madrat::setTerraOptions()
 
   gadmDataRaw <- readSource("GADM")
   disputedAreaCountries <- gadmDataRaw$COUNTRY[!gadmDataRaw$GID_0 %in% madrat::getISOlist()]

@@ -13,8 +13,6 @@
 
 calcSOCbyLandType <- function() {
 
-  madrat::setTerraOptions()
-
   message("Please be patient, this will take now a while.")
 
   # read in SOC data

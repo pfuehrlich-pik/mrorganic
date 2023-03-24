@@ -31,7 +31,6 @@ calcLandTypeAreas <- function(categories = "CropGrassOther") {
     stop("Unknown categories \"", categories, "\"")
   }
 
-  madrat::setTerraOptions()
   land <- readSource("ESACCI", subtype = "landcover2010", convert = FALSE)
   message("Please be patient, this will take now a while.")
   landSplit <- terra::classify(land, m$map, others = (max(m$map[, 2]) + 1))

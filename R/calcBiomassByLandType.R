@@ -19,8 +19,6 @@ calcBiomassByLandType <- function(subtype) {
   subtype <- toolSubtypeSelect(subtype, c(aboveground = "abovegroundBiomass",
                                           belowground = "belowgroundBiomass"))
 
-  madrat::setTerraOptions()
-
   message("Please be patient, this will take a while.")
 
   # read in biomass data
