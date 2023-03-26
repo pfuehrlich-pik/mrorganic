@@ -11,7 +11,7 @@ plotMap <- function(x, name, createPng = FALSE, ...) {
   unit <- sub("^[^:]*: *", "", grep("unit:", magclass::getComment(x), value = TRUE))
   for (i in magclass::getItems(x, dim = 3)) {
     if (createPng) {
-      withr::local_png(paste0(name, "_", i, ".png"), width = 800, height = 400)
+      withr::local_png(gsub(" ", "_", paste0(name, "_", i, ".png")), width = 800, height = 400)
     }
     terra::plot(magclass::as.SpatRaster(x[, , i]),
                 main = paste0(i, " ", name, " (", unit, ")"),

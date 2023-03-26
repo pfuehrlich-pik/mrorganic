@@ -17,8 +17,6 @@
 #' }
 #'
 fullORGANIC <- function(rev) {
-  madrat::setTerraOptions()
-
   if (rev < 2) stop("rev has to be set to 2! Other data revisions are currently not available!")
 
   # regional SOC output
@@ -30,16 +28,17 @@ fullORGANIC <- function(rev) {
   # gridded SOC output
   soc <- calcOutput("SOCbyLandType", aggregate = FALSE, supplementary = TRUE, file = "soc.nc")
   write.magpie(round(soc$x, 2), "soc.cs5")
-  write.magpie(round(soc$weight, 2), "landcover.cs5")
-  write.magpie(round(soc$weight, 2), "landcover.nc")
+  write.magpie(round(soc$weight, 2), "landcover_area_soc.cs5")
+  write.magpie(soc$weight, "landcover_area_soc.nc")
   plotMap(soc$x, name = "SOC", createPng = TRUE)
 
-  landShares <- round(soc$weight, 8) / dimSums(soc$weight, dim = 3)
-  getComment(landShares) <- "unit: 1"
-  plotMap(landShares, name = "land cover share", createPng = TRUE)
+  landSharesSOC <- round(soc$weight, 8) / dimSums(soc$weight, dim = 3)
+  getComment(landSharesSOC) <- "unit: 1"
+  plotMap(landSharesSOC, name = "landcover share SOC", createPng = TRUE)
 
   ecoregions <- calcOutput("Ecoregions2017Raster", nrows = 720, ncols = 1440, aggregate = FALSE)
-  ecoregions <- ecoregions[, c("x", "y", "ECO_BIOME_")]
+  ecoregions <- ecoregions[, c("x", "y", "BIOME_NAME")]
+  colnames(ecoregions)[3] <- "biome"
 
   regionmapping <- madrat::toolGetMapping(madrat::getConfig("regionmapping"), type = "regional")
 
@@ -51,23 +50,38 @@ fullORGANIC <- function(rev) {
 
     biomass <- calcOutput("BiomassByLandType", subtype = i, aggregate = FALSE, supplementary = TRUE)
 
-    biomassWeight <- biomass$weight
+    biomassLandAreas <- biomass$weight
+    write.magpie(biomassLandAreas, paste0(i, "_biomass_landcover_area.nc"))
+
+    getComment(biomass$x) <- paste("unit:", biomass$unit)
     biomass <- biomass$x
+    write.magpie(biomass, paste0(i, "_biomass.nc"))
 
-    write.magpie(biomass, paste0(i, ".nc"))
+    plotMap(biomass, name = paste0(i, " biomass"), createPng = TRUE)
 
-    plotMap(biomass, name = paste0("biomass_", i), createPng = TRUE)
-
-    # add columns "country_ECO_BIOME_" and "region_ECO_BIOME_"
-    biomassWeight <- toolAddEcoregions(biomassWeight, ecoregions, regionmapping)
     biomass <- toolAddEcoregions(biomass, ecoregions, regionmapping)
+    write.magpie(round(biomass, 2), paste0(i, "_biomass.cs5"))
 
-    write.magpie(round(biomass, 2), paste0(i, ".cs5"))
+    biomassLandAreas <- toolAddEcoregions(biomassLandAreas, ecoregions, regionmapping)
+    getComment(biomassLandAreas) <- "unit: ha"
+    write.magpie(round(biomassLandAreas, 2), paste0(i, "_biomass_landcover_area.cs5"))
 
-    aggregatedCountryBiome <- toolAggregate(biomass, weight = biomassWeight, to = "country_ECO_BIOME_")
-    magclass::write.magpie(round(aggregatedCountryBiome, 2), paste0(i, "_biomass_country_biome.cs5"))
+    landSharesBiomass <- round(biomassLandAreas, 8) / dimSums(biomassLandAreas, dim = 3)
+    getComment(landSharesBiomass) <- "unit: 1"
+    plotMap(landSharesBiomass, name = paste("landcover share", i, "biomass"), createPng = TRUE)
 
-    aggregatedRegionBiome <- toolAggregate(biomass, weight = biomassWeight, to = "region_ECO_BIOME_")
-    magclass::write.magpie(round(aggregatedRegionBiome, 2), paste0(i, "_biomass_region_biome.cs5"))
+    aggregatedCountryBiome <- toolAggregate(biomass, weight = biomassLandAreas, to = "country_biome")
+    aggregatedCountryBiome <- setItems(aggregatedCountryBiome, "country_biome",
+                                       sub("_", ".", getItems(aggregatedCountryBiome, "country_biome")),
+                                       raw = TRUE)
+    names(dimnames(aggregatedCountryBiome))[1] <- "country.biome"
+    write.magpie(round(aggregatedCountryBiome, 2), paste0(i, "_biomass_country_biome.cs5"))
+
+    aggregatedRegionBiome <- toolAggregate(biomass, weight = biomassLandAreas, to = "region_biome")
+    aggregatedRegionBiome <- setItems(aggregatedRegionBiome, "region_biome",
+                                      sub("_", ".", getItems(aggregatedRegionBiome, "region_biome")),
+                                      raw = TRUE)
+    names(dimnames(aggregatedRegionBiome))[1] <- "region.biome"
+    write.magpie(round(aggregatedRegionBiome, 2), paste0(i, "_biomass_region_biome.cs5"))
   }
 }
