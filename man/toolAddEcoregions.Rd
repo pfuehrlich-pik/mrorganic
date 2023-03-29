@@ -15,7 +15,7 @@ toolAddEcoregions(x, ecoregions, regionmapping)
 }
 \value{
 x with additional ecoregion and region information. Spatial subdimensions:
-        c("x", "y", "country", "region", "ECO_BIOME_", "country_ECO_BIOME_", "region_ECO_BIOME_")
+        c("x", "y", "country", "region", "biome", "country_biome", "region_biome")
 }
 \description{
 Enriches a magclass object with ecoregion and region information.

@@ -21,6 +21,8 @@ readSpawn <- function(subtype) {
           belowgroundBiomass = "belowground_biomass_carbon_2010.tif",
           belowgroundBiomassUncertainty = "belowground_biomass_carbon_2010_uncertainty.tif"))
 
-  r <- terra::rast(f)
+  # scale by 0.1 as the data is based on the documentation scaled by that factor
+  # in the GeoTIFF files
+  r <- 0.1 * terra::rast(f)
   return(list(x = r, class = "SpatRaster"))
 }

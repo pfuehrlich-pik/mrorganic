@@ -19,7 +19,7 @@ for GTAP11 world regions.
 }
 \examples{
 \dontrun{
-retrieveData("Organic", rev = 2, regionmapping = "regionmappingGTAP11.csv")
+retrieveData("Organic", rev = 2.1, regionmapping = "regionmappingGTAP11.csv")
 }
 
 }
