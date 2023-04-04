@@ -17,7 +17,7 @@
 #' }
 #'
 fullORGANIC <- function(rev) {
-  if (rev < 2.1) stop("rev has to be set to 2.1! Other data revisions are currently not available!")
+  if (rev != 2.1) stop("rev has to be set to 2.1! Please use older package versions to generate older data revisions!")
 
   # regional SOC output
   calcOutput("SOCbyLandType", file = "soc_region.cs2", round = 2)

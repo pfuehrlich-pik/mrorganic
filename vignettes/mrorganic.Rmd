@@ -1,10 +1,10 @@
 ---
-title: "Generating SOC and biomass data with mrorganic"
-author: "Pascal Führlich"
+title: "Processing soil organic carbon and biomass data with mrorganic"
+author: "Jan Philipp Dietrich, Pascal Führlich"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Generating SOC and biomass data with mrorganic}
+  %\VignetteIndexEntry{Processing soil organic carbon and biomass data with mrorganic}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -13,39 +13,84 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 
-`mrorganic` greatly simplifies downloading and preparing SOC and biomass data for further scientific work.
-The prefix "mr" of `mrorganic` indicates that it is a `madrat`-based data package.
-`madrat` is a package and a framework that structures and supports data preparation
-with various tools e.g. aggregation or caching.
+`mrorganic` is a data processing package based on the [`madrat`](https://github.com/pik-piam/madrat) data processing framework (indicated
+by its prefix `mr`) with the purpose to estimate soil organic carbon (SOC) as well as above- 
+and belowground biomass for different land types.
 
+From the [`madrat`](https://github.com/pik-piam/madrat) universe it inherits various traits such as a prescribed data processing structure,
+data caching, metadata collection and handling, data consistency checks as well as certain
+flexibility in spatial aggregation.
 
 # Installation
+
+The easiest way of installing it is to add the PIK-CRAN repository and install it from there:
+
 ```{r, echo = TRUE, eval = FALSE}
 # enable R to discover and download R packages from PIK
 options(repos = c(CRAN = "@CRAN@", pik = "https://rse.pik-potsdam.de/r/packages"))
 install.packages("mrorganic")
 ```
 
-# Data Package
-Like most `madrat`-based packages, `mrorganic` includes a function that runs all preparation steps and creates a tgz
-archive which includes all data sets. For `mrorganic` some plots are also included. Run it like this:
+This should install the package with all its dependencies.
+
+# How to use it 
+
+Like most `madrat`-based packages, `mrorganic` includes a function that runs all data preparation steps and creates a tgz
+archive which includes a collection of all data sets. For `mrorganic` some plots are also included. Run it like this:
 ```{r, echo = TRUE, eval = FALSE}
-# enable R to discover and download R packages from PIK
 library(mrorganic)
-path <- retrieveData("organic", rev = 2)
+path <- retrieveData("organic", rev = 2.1, regionmapping = "regionmappingGTAP11.csv")
 message(path, " created.")
 ```
-All data will be on ISO country resolution. To instead aggregate to GTAP11 regions:
+
+The revision number `rev` specifies the data revision to be produced. This argument can be used to distinguish older from newer revisions and potentially allow to generate different data revisions with the same data package. As `mrorganic` can only generate a specific data revision with a specific version of a package, this setting here is solely used as a consistency check, that you indeed use the proper package version for the data revision you are interest in. A data revision different to the one supported in the used package version will result in an error informing the user to use a different package version for other data revisions.
+
+The `regionmapping` argument is used to define for which regions the data should be prepared. In case of GTAP11 it will return many of the data sets for GTAP11 world regions. If this is not set explicitly it uses an exemplified world regional aggregation with 12 world regions and provided by the `madrat` package itself. It is also possible to generate own mappings and use them here. 
+
+The above call `retrieveData` calls internally the function `fullORGANIC` which is part of this package and contains the recipe to create the data collection. Here it is possible to see which components the final data product consists of and to make adjustments.
+
+Please be aware that running the full data processing for the first time is quite resource intensive. While it does not necessarily require a high end CPU, it certainly requires quite a lot of free space on disk for temporary files (> 200 GB) as well as time to compute (5-10 hours). Consecutive runs will usually be much faster as all unchanged data will be read from cache files.
+
+The total processing will create a file called `rev2.1_4a934e12_organic.tgz` where the file name consists of the revision number, followed by a hash of the used region mapping (to unambiguously identify it) and the name of the data collection. Running it with a different version of the package will potentially come with a different data revision. Running it with a different region mapping will generate a different region mapping hash.
+
+# How to run single components
+
+In interactive use of the package it is often more handy to only run specific components of the data processing rather than generating the whole data collection. In this case the different "calculation functions" of the package come into play. Each data collection (as generated via `retrieveData`) calls a series of calculation functions where every calculation function generates a single data set. As calculation functions can be using other calculation functions as their data source not all data sets generated by calculations functions will necessarily end up in the final data collection. 
+
+calculation functions always start with the prefix `calc` followed by the name of the calculation and can be called via `calcOutput`, e.g. `calcSOCbyLandType` contains the calculation of soil organic carbon contents by land type and can be called via `calcOutput("SOCbyLandType")`.
+
+Calling the respective functions via the `calcOutput` wrapper function embeds the calculations into the `madrat` universe and enriches the computations by the features of the framework such as caching, metadata handling and advanced aggregation options. `calcSOCbyLandType` for instance internally is computing the data with 0.25°x0.25° resolution. However, for some applications it might be actually desired to have the data available on ISO country level or world regions. `calcOutput` can directly compute the data on all of these resolutions:
+
 ```{r, echo = TRUE, eval = FALSE}
-# enable R to discover and download R packages from PIK
-retrieveData("organic", rev = 2, regionmapping = "regionmappingGTAP11.csv")
+# gridded data with original resolution of 0.25deg x 0.25deg
+socGrid <- calcOutput("SOCbyLandType", aggregate = FALSE)
+# data on ISO country level
+socCountry <- calcOutput("SOCbyLandType", aggregate = "country")
+# data on world regional level
+socRegion <- calcOutput("SOCbyLandType", aggregate = TRUE)
+# or simply
+socRegion2 <- calcOutput("SOCbyLandType")
 ```
+
+First time this calculation is run the data will be computed from scratch. In all follow up calculations the data will be read from cache.
+
+# Data processing in `mrorganic`
+
+`mrorganic` generates two primary data products:
+
+* Soil organic carbon data split by land types
+* aboveground and belowground biomass split by land types
+
+The overall methodology is in both case rather comparable and can be mostly seen in the function `toolAggregateByLandType`. The basic idea is that land type specific data on a lower resolution can be estimated from land-type unspecific high resolution data through land-type specific weighted aggregation. For instance the soil organic carbon content of cropland in a country can be estimated by taking the average soil organic carbon content of all high resolution cells of that country which are mapped as cropland. This calculation is imperfect mainly due to two reasons: 
+
+1. In case of mixed occurrence of land types in a cell this method is unable to disentangle the data and is instead assuming the same value for all land types in this cell.
+2. The method depends on a good spatial match of land type information to the data to be aggregated which is not necessarily given (e.g. the land type data set might suggest cropland in spots where the soil organic carbon data set is suspecting a different land type).
+
+Due to these imperfections it is important to evaluate the quality of the resulting data set with respect to the given task. While the quality of the data might be suitable for some applications it most likely will not suffice for others.
 
 # SOC Data
 To get SOC data including land type data as weights:
-```{r, echo = TRUE, eval = FALSE}
 library(mrorganic)
-soc <- calcOutput("SOCbyLandType", aggregate = FALSE, supplementary = TRUE)
 plotMap(soc$x, name = "SOC")
 ```
 We set `aggregate = FALSE` here, because by default `calcOutput` would aggregate to
