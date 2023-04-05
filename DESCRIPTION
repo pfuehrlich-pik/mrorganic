@@ -6,7 +6,7 @@ Date: 2023-04-05
 Authors@R: c(
     person("Jan Philipp", "Dietrich", , "dietrich@pik-potsdam.de", role = c("aut", "cre")),
     person("Pascal", "Führlich", , "pascal.fuehrlich@pik-potsdam.de", role = "aut"),
-    person("Hugo", "Valin", , "pascal.fuehrlich@pik-potsdam.de", role = c("fnd","ctb"))
+    person("Hugo", "Valin", , , role = c("fnd","ctb"))
   )
 Description: mrorganic supports downloading and preparing soil organic carbon
     and biomass data for further scientific work.
