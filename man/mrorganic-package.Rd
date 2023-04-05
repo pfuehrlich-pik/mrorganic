@@ -23,4 +23,9 @@ Authors:
   \item Pascal Führlich \email{pascal.fuehrlich@pik-potsdam.de}
 }
 
+Other contributors:
+\itemize{
+  \item Hugo Valin \email{pascal.fuehrlich@pik-potsdam.de} [funder, contributor]
+}
+
 }

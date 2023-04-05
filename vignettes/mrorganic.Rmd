@@ -88,28 +88,86 @@ The overall methodology is in both case rather comparable and can be mostly seen
 
 Due to these imperfections it is important to evaluate the quality of the resulting data set with respect to the given task. While the quality of the data might be suitable for some applications it most likely will not suffice for others.
 
-# SOC Data
-To get SOC data including land type data as weights:
-library(mrorganic)
-plotMap(soc$x, name = "SOC")
-```
-We set `aggregate = FALSE` here, because by default `calcOutput` would aggregate to
-the regions currently defined by `getConfig("regionmapping")`, but we want gridded data.
-With `supplementary = TRUE` we get metadata in addition to the SOC data. In this case
-we care about the land type data which we want to plot next:
+# Land type data
+
+As spatial land type information serves the [ESA CCI LandCover Map for 2010](http://maps.elie.ucl.ac.be/CCI/viewer/index.php) which provides high resolution land cover information. For aggregation of soil organic carbon the [detailed land cover classes](http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Legend.csv) are aggregated to three classes: Cropland, Grassland and Other. For aggregation of above- and belowground biomass in total 6 land classes are being used: cropland, grassland, forest, othernatveg and residual. The mapping of detailed classes to these aggregated ones can be found in the function `calcLandTypeAreas`.  
+
+-------------------------------------------------------
+
+![cropland share as used for calculation of land specific soil organic carbon contents](landcover_share_SOC_cropland.png){width=600px}
+
+-------------------------------------------------------
+
+![Grassland share as used for calculation of land specific soil organic carbon contents](landcover_share_SOC_grassland.png){width=600px}
+
+-------------------------------------------------------
+
+![other land share as used for calculation of land specific soil organic carbon contents](landcover_share_SOC_other.png){width=600px}
+
+# Soil Organic Carbon data
+
+Soil organic carbon calculations build on the [Global Soil Organic Carbon Sequestration Potential Map (GSOCseq)](https://www.fao.org/soils-portal/data-hub/soil-maps-and-databases/global-soil-organic-carbon-sequestration-potential-map-gsocseq/en/) from FAO. Data is aggregated weighted with ESA CCI land cover information first to 0.25°x0.25°. From this resolution, which serves as spatial base resolution for this study, the data can be further aggregated in the same way to countries or world regions.
+
+As already shown above the resulting data can be retrieved in the following way:
+
+
 ```{r, echo = TRUE, eval = FALSE}
-landShares <- round(soc$weight, 8) / dimSums(soc$weight, dim = 3) # calculate shares
-getComment(landShares) <- "unit: 1"
-plotMap(landShares, name = "land cover share")
+# gridded data with original resolution of 0.25deg x 0.25deg
+socGrid <- calcOutput("SOCbyLandType", aggregate = FALSE)
+# data on ISO country level
+socCountry <- calcOutput("SOCbyLandType", aggregate = "country")
+# data on world regional level
+socRegion <- calcOutput("SOCbyLandType", aggregate = TRUE)
+# or simply
+socRegion2 <- calcOutput("SOCbyLandType")
 ```
 
-# Biomass Data
-The biomass dataset has multiple subtypes that can be selected like this:
+-------------------------------------------------------
+
+![Soil organic carbon content estimated for cropland land](SOC_cropland.png){width=600px}
+
+-------------------------------------------------------
+
+![Soil organic carbon content estimated for grassland](SOC_grassland.png){width=600px}
+
+-------------------------------------------------------
+
+![Soil organic carbon content estimated for other land](SOC_other.png){width=600px}
+
+# Aboveground and Belowground Biomass data
+The aboveground and belowground biomass dataset is based on the [Spawn et al.](https://doi.org/10.3334/ORNLDAAC/1763) Global Aboveground and Belowground Biomass Carbon Density Maps for the Year 2010. While for all data sources `mrorganic` should be capable to download the data sources on its own, the data archive for the Spawn data set at ORNL DAAC, requires a manual download from the website. Therefor, `mrorganic` will guide you at its first execution through the manual download process. After supplying the path to the downloaded data set `mrorganic` will continue its automatic data processing.
+
+Called can the final data product via the function `BiomassbyLandType`:
 ```{r, echo = TRUE, eval = FALSE}
 library(mrorganic)
 biomassAbove <- calcOutput("BiomassbyLandType", subtype = "aboveground")
-plotMap(biomassAbove, name = "biomass_aboveground")
-
 biomassBelow <- calcOutput("BiomassbyLandType", subtype = "belowground")
-plotMap(biomassBelow, name = "biomass_belowground")
 ```
+
+The function comes with two subtypes: `aboveground` and `belowground`. Analogous to the soil organic carbon calculations, the `aggregate` argument can be used again to extract the data in different resulting aggregation levels.
+
+-------------------------------------------------------
+
+![Aboveground biomass on cropland](aboveground_biomass_cropland.png){width=600px}
+
+-------------------------------------------------------
+
+![belowground biomass on cropland](belowground_biomass_cropland.png){width=600px}
+
+
+-------------------------------------------------------
+
+![Aboveground biomass on grassland](aboveground_biomass_grassland.png){width=600px}
+
+-------------------------------------------------------
+
+![belowground biomass on grassland](belowground_biomass_grassland.png){width=600px}
+
+
+-------------------------------------------------------
+
+![Aboveground biomass on forest](aboveground_biomass_forest.png){width=600px}
+
+-------------------------------------------------------
+
+![belowground biomass on forest](belowground_biomass_forest.png){width=600px}
