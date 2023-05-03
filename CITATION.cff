@@ -3,7 +3,7 @@ message: If you use this software, please cite it using the metadata from this f
 type: software
 title: 'mrorganic: Provide soil organic carbon and biomass data'
 version: 0.5.4
-date-released: '2023-04-05'
+date-released: '2023-05-03'
 abstract: mrorganic supports downloading and preparing soil organic carbon and biomass
   data for further scientific work.
 authors:

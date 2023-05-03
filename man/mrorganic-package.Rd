@@ -25,7 +25,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Hugo Valin \email{pascal.fuehrlich@pik-potsdam.de} [funder, contributor]
+  \item Hugo Valin [funder, contributor]
 }
 
 }

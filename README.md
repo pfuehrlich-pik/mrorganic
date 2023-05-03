@@ -47,7 +47,7 @@ In case of questions / problems please contact Jan Philipp Dietrich <dietrich@pi
 
 To cite package **mrorganic** in publications use:
 
-Dietrich J, Führlich P (2023). _mrorganic: Provide soil organic carbon and biomass data_. R package version 0.5.4, <URL: https://github.com/tscheypidi/mrorganic>.
+Dietrich J, Führlich P (2023). _mrorganic: Provide soil organic carbon and biomass data_. R package version 0.5.4, <https://github.com/tscheypidi/mrorganic>.
 
 A BibTeX entry for LaTeX users is
 
