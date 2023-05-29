@@ -4,7 +4,7 @@
 \alias{plotMap}
 \title{plotMap}
 \usage{
-plotMap(x, name, createPng = FALSE, ...)
+plotMap(x, name, createPng = FALSE, range = NULL, ...)
 }
 \arguments{
 \item{x}{The data to plot as magclass object}
@@ -12,6 +12,9 @@ plotMap(x, name, createPng = FALSE, ...)
 \item{name}{The name/title of the plot/png}
 
 \item{createPng}{If TRUE save plot as png}
+
+\item{range}{range of values for the color bar. If NULL range will be detected
+automatically}
 
 \item{...}{Further arguments passed to terra::plot}
 }

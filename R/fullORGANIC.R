@@ -30,7 +30,7 @@ fullORGANIC <- function(rev) {
   write.magpie(round(soc$x, 2), "soc.cs5")
   write.magpie(round(soc$weight, 2), "landcover_area_soc.cs5")
   write.magpie(soc$weight, "landcover_area_soc.nc")
-  plotMap(soc$x, name = "SOC", createPng = TRUE)
+  plotMap(soc$x, name = "SOC", range = c(0, 400), createPng = TRUE)
 
   landSharesSOC <- round(soc$weight, 8) / dimSums(soc$weight, dim = 3)
   getComment(landSharesSOC) <- "unit: 1"

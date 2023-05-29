@@ -1,6 +1,6 @@
 ---
 title: "Processing soil organic carbon and biomass data with mrorganic"
-author: "Jan Philipp Dietrich, Pascal Führlich"
+author: "Jan Philipp Dietrich, Pascal Führlich, Hugo Valin"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -43,23 +43,23 @@ path <- retrieveData("organic", rev = 2.1, regionmapping = "regionmappingGTAP11.
 message(path, " created.")
 ```
 
-The revision number `rev` specifies the data revision to be produced. This argument can be used to distinguish older from newer revisions and potentially allow to generate different data revisions with the same data package. As `mrorganic` can only generate a specific data revision with a specific version of a package, this setting here is solely used as a consistency check, that you indeed use the proper package version for the data revision you are interest in. A data revision different to the one supported in the used package version will result in an error informing the user to use a different package version for other data revisions.
+The revision number `rev` specifies the data revision to be produced. This mandatory argument is used to distinguish older from newer revisions and potentially allow to generate different data revisions with the same data package. As `mrorganic` can only generate a specific data revision with a specific version of a package, this setting here is solely used as a consistency check, that you indeed use the proper package version for the data revision you are interest in. A data revision different to the one supported in the used package version will result in an error informing the user to use a different package version for other data revisions.
 
-The `regionmapping` argument is used to define for which regions the data should be prepared. In case of GTAP11 it will return many of the data sets for GTAP11 world regions. If this is not set explicitly it uses an exemplified world regional aggregation with 12 world regions and provided by the `madrat` package itself. It is also possible to generate own mappings and use them here. 
+The `regionmapping` argument is used to define for which regions the data should be prepared. For instance, if a mapping from ISO3 countries to the GTAP11 regions is used, the datasets will be aggregated at the level of the GTAP11 world regions. If this is not set explicitly it uses an exemplified world regional aggregation with 12 world regions as provided by the `madrat` package itself. It is also possible to introduce the user’s own mappings and use them here.
 
-The above call `retrieveData` calls internally the function `fullORGANIC` which is part of this package and contains the recipe to create the data collection. Here it is possible to see which components the final data product consists of and to make adjustments.
+The above instruction `retrieveData` calls internally the function `fullORGANIC` which is part of this package and contains the script to create the data collection. Here it is possible to see which components the final data product consists of and to make adjustments. From the command line you can call its documentation via `?fullORGANIC` or have a look at the code via `mrorganic:::fullORGANIC`. 
 
-Please be aware that running the full data processing for the first time is quite resource intensive. While it does not necessarily require a high end CPU, it certainly requires quite a lot of free space on disk for temporary files (> 200 GB) as well as time to compute (5-10 hours). Consecutive runs will usually be much faster as all unchanged data will be read from cache files.
+Please be aware that running the full data processing for the first time is quite resource intensive. While it does not necessarily require a high end CPU, it certainly requires quite a lot of free space on disk for temporary files (> 200 GB) as well as time to compute (5-10 hours). Consecutive runs will usually be much faster as all unchanged data will be read from cache files. Files will be partly written in your system temp folder, partly in the MADRaT mainfolder (see `getConfig("mainfolder")`).
 
-The total processing will create a file called `rev2.1_4a934e12_organic.tgz` where the file name consists of the revision number, followed by a hash of the used region mapping (to unambiguously identify it) and the name of the data collection. Running it with a different version of the package will potentially come with a different data revision. Running it with a different region mapping will generate a different region mapping hash.
+The total processing will create a file called `rev2.1_4a934e12_organic.tgz` where the file name consists of the revision number, followed by a hash of the used region mapping (to unambiguously identify it) and the name of the data collection. Running it with a different version of the package will potentially come with a different data revision. Running it with a different region mapping will generate a different region mapping hash. Similarly, changes in the source data sets would affect the results of `mrorganic`. However, the data sources used in this package all are assumed to be static and no changes are expected.
 
 # How to run single components
 
-In interactive use of the package it is often more handy to only run specific components of the data processing rather than generating the whole data collection. In this case the different "calculation functions" of the package come into play. Each data collection (as generated via `retrieveData`) calls a series of calculation functions where every calculation function generates a single data set. As calculation functions can be using other calculation functions as their data source not all data sets generated by calculations functions will necessarily end up in the final data collection. 
+In interactive use of the package, it is often handier to only run specific components of the data processing rather than generating the whole data collection. In this case the different "calculation functions" of the package come into play. Each data collection (as generated via `retrieveData`) calls a series of calculation functions where every calculation function generates a single data set. As calculation functions can be using other calculation functions as their data source not all data sets generated by calculations functions will necessarily end up in the final data collection. 
 
-calculation functions always start with the prefix `calc` followed by the name of the calculation and can be called via `calcOutput`, e.g. `calcSOCbyLandType` contains the calculation of soil organic carbon contents by land type and can be called via `calcOutput("SOCbyLandType")`.
+Calculation functions always start with the prefix `calc` followed by the name of the calculation and can be called via `calcOutput`, e.g. `calcSOCbyLandType` contains the calculation of soil organic carbon contents by land type and can be called via `calcOutput("SOCbyLandType")`.
 
-Calling the respective functions via the `calcOutput` wrapper function embeds the calculations into the `madrat` universe and enriches the computations by the features of the framework such as caching, metadata handling and advanced aggregation options. `calcSOCbyLandType` for instance internally is computing the data with 0.25°x0.25° resolution. However, for some applications it might be actually desired to have the data available on ISO country level or world regions. `calcOutput` can directly compute the data on all of these resolutions:
+Calling the respective functions via the `calcOutput` wrapper function embeds the calculations into the `madrat` universe and enriches the computations by the features of the framework such as caching, metadata handling and advanced aggregation options. `calcSOCbyLandType` is for instance internally computing the data with 0.25°x0.25° resolution. However, for some applications, it might be actually desired to have the data available on ISO country level or world regions. `calcOutput` can directly compute the data on all these resolutions:
 
 ```{r, echo = TRUE, eval = FALSE}
 # gridded data with original resolution of 0.25deg x 0.25deg
@@ -72,7 +72,7 @@ socRegion <- calcOutput("SOCbyLandType", aggregate = TRUE)
 socRegion2 <- calcOutput("SOCbyLandType")
 ```
 
-First time this calculation is run the data will be computed from scratch. In all follow up calculations the data will be read from cache.
+The first time this calculation is run, the data will be computed from scratch. In all follow-up calculations, the data will be read from cache.
 
 # Data processing in `mrorganic`
 
@@ -84,25 +84,29 @@ First time this calculation is run the data will be computed from scratch. In al
 The overall methodology is in both case rather comparable and can be mostly seen in the function `toolAggregateByLandType`. The basic idea is that land type specific data on a lower resolution can be estimated from land-type unspecific high resolution data through land-type specific weighted aggregation. For instance the soil organic carbon content of cropland in a country can be estimated by taking the average soil organic carbon content of all high resolution cells of that country which are mapped as cropland. This calculation is imperfect mainly due to two reasons: 
 
 1. In case of mixed occurrence of land types in a cell this method is unable to disentangle the data and is instead assuming the same value for all land types in this cell.
-2. The method depends on a good spatial match of land type information to the data to be aggregated which is not necessarily given (e.g. the land type data set might suggest cropland in spots where the soil organic carbon data set is suspecting a different land type).
+2. The method depends on a good spatial match of land type information to the data to be aggregated which is not necessarily given (e.g. the land type data set might suggest cropland in spots where the soil organic carbon data set is based on a different land type).
 
-Due to these imperfections it is important to evaluate the quality of the resulting data set with respect to the given task. While the quality of the data might be suitable for some applications it most likely will not suffice for others.
+Due to these limitations it is important to evaluate the quality of the resulting data set with respect to the given task. For instance, in the case of the biomass map, the land cover data used do not allow to produce suitable maps for grassland or cropland. While the quality of the data might be suitable for some applications, it most likely will not suffice for others.
 
 # Land type data
 
-As spatial land type information serves the [ESA CCI LandCover Map for 2010](http://maps.elie.ucl.ac.be/CCI/viewer/index.php) which provides high resolution land cover information. For aggregation of soil organic carbon the [detailed land cover classes](http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Legend.csv) are aggregated to three classes: Cropland, Grassland and Other. For aggregation of above- and belowground biomass in total 6 land classes are being used: cropland, grassland, forest, othernatveg and residual. The mapping of detailed classes to these aggregated ones can be found in the function `calcLandTypeAreas`.  
+As spatial land type information serves the [ESA CCI LandCover Map for 2010](http://maps.elie.ucl.ac.be/CCI/viewer/index.php) which provides high resolution land cover information. For aggregation of soil organic carbon the [detailed land cover classes](http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Legend.csv) are aggregated to three classes: cropland, grassland and other. For aggregation of above- and belowground biomass in total 6 land classes are being used: cropland, grassland, forest, other natural vegetation (othernatveg) and residual. The mapping of detailed classes to these aggregated ones can be found in the function `calcLandTypeAreas`.  
 
 -------------------------------------------------------
 
-![cropland share as used for calculation of land specific soil organic carbon contents](landcover_share_SOC_cropland.png){width=600px}
+![cropland share as used for calculation of land specific aboveground biomass](landcover_share_aboveground_biomass_cropland.png){width=600px}
 
 -------------------------------------------------------
 
-![Grassland share as used for calculation of land specific soil organic carbon contents](landcover_share_SOC_grassland.png){width=600px}
+![Grassland share as used for calculation of land specific aboveground biomass](landcover_share_aboveground_biomass_grassland.png){width=600px}
 
 -------------------------------------------------------
 
-![other land share as used for calculation of land specific soil organic carbon contents](landcover_share_SOC_other.png){width=600px}
+![forest land share as used for calculation of land specific aboveground biomass](landcover_share_aboveground_biomass_forest.png){width=600px}
+
+-------------------------------------------------------
+
+![other land share as used for calculation of land specific aboveground biomass](landcover_share_aboveground_biomass_othernatveg.png){width=600px}
 
 # Soil Organic Carbon data
 
@@ -135,9 +139,9 @@ socRegion2 <- calcOutput("SOCbyLandType")
 ![Soil organic carbon content estimated for other land](SOC_other.png){width=600px}
 
 # Aboveground and Belowground Biomass data
-The aboveground and belowground biomass dataset is based on the [Spawn et al.](https://doi.org/10.3334/ORNLDAAC/1763) Global Aboveground and Belowground Biomass Carbon Density Maps for the Year 2010. While for all data sources `mrorganic` should be capable to download the data sources on its own, the data archive for the Spawn data set at ORNL DAAC, requires a manual download from the website. Therefor, `mrorganic` will guide you at its first execution through the manual download process. After supplying the path to the downloaded data set `mrorganic` will continue its automatic data processing.
+The aboveground and belowground biomass dataset is based on the [Spawn et al.](https://doi.org/10.3334/ORNLDAAC/1763) Global Aboveground and Belowground Biomass Carbon Density Maps for the Year 2010. While `mrorganic` is intended to download all data sources on its own, the data archive for the Spawn data set at ORNL DAAC requires a manual download from the website. Therefore, `mrorganic` will guide you at its first execution through the manual download process. After supplying the path to the downloaded data set `mrorganic` will continue its automatic data processing.
 
-Called can the final data product via the function `BiomassbyLandType`:
+The final data product is computed by `calcBiomassLandType` which can be called via the `calcOutput` wrapper wit the type argument `BiomassbyLandType`:
 ```{r, echo = TRUE, eval = FALSE}
 library(mrorganic)
 biomassAbove <- calcOutput("BiomassbyLandType", subtype = "aboveground")
@@ -148,26 +152,12 @@ The function comes with two subtypes: `aboveground` and `belowground`. Analogous
 
 -------------------------------------------------------
 
-![Aboveground biomass on cropland](aboveground_biomass_cropland.png){width=600px}
-
--------------------------------------------------------
-
-![belowground biomass on cropland](belowground_biomass_cropland.png){width=600px}
-
-
--------------------------------------------------------
-
-![Aboveground biomass on grassland](aboveground_biomass_grassland.png){width=600px}
-
--------------------------------------------------------
-
-![belowground biomass on grassland](belowground_biomass_grassland.png){width=600px}
-
-
--------------------------------------------------------
-
 ![Aboveground biomass on forest](aboveground_biomass_forest.png){width=600px}
 
 -------------------------------------------------------
 
 ![belowground biomass on forest](belowground_biomass_forest.png){width=600px}
+
+
+# Acknowledgement
+The development of this package was supported by the Organisation for Economic Co-operation and Development. The data and maps used in the package are without prejudice to the status of or sovereignty over any territory, to the delimitation of international frontiers and boundaries and to the name of any territory, city or area.

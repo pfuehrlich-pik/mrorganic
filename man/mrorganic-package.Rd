@@ -25,7 +25,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Hugo Valin [funder, contributor]
+  \item Hugo Valin [contributor]
 }
 
 }
