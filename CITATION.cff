@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: If you use this software, please cite it using the metadata from this file.
 type: software
 title: 'mrorganic: Provide soil organic carbon and biomass data'
-version: 0.5.5
-date-released: '2023-05-29'
+version: 0.5.6
+date-released: '2023-06-02'
 abstract: mrorganic supports downloading and preparing soil organic carbon and biomass
   data for further scientific work.
 authors:

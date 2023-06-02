@@ -1,10 +1,10 @@
 ---
-title: "Processing soil organic carbon and biomass data with mrorganic"
+title: "mrorganic: a data aggregation package for soil organic carbon and biomass data"
 author: "Jan Philipp Dietrich, Pascal Führlich, Hugo Valin"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Processing soil organic carbon and biomass data with mrorganic}
+  %\VignetteIndexEntry{ mrorganic: a data aggregation package for soil organic carbon and biomass data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,7 +15,7 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 
 `mrorganic` is a data processing package based on the [`madrat`](https://github.com/pik-piam/madrat) data processing framework (indicated
 by its prefix `mr`) with the purpose to estimate soil organic carbon (SOC) as well as above- 
-and belowground biomass for different land types.
+and belowground biomass or their use in different type of more aggregated models.
 
 From the [`madrat`](https://github.com/pik-piam/madrat) universe it inherits various traits such as a prescribed data processing structure,
 data caching, metadata collection and handling, data consistency checks as well as certain
