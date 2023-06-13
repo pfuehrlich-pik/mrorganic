@@ -37,6 +37,5 @@ calcWorldCountries <- function() {
   return(list(x = out,
               description = "World country areas with all disputed areas mapped to a country",
               unit = "1",
-              cache = FALSE,
               class = "SpatVector"))
 }

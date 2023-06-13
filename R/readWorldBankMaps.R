@@ -15,5 +15,5 @@
 
 readWorldBankMaps <- function(subtype = "CountryPolygons") {
   r <- terra::vect(Sys.glob("*/*.shp"))
-  return(list(x = r, class = "SpatVector", cache = FALSE))
+  return(list(x = r, class = "SpatVector"))
 }
